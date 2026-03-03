@@ -31,6 +31,9 @@ class _MainWrapperState extends State<MainWrapper> {
       case 3:
         context.go('/profile');
         break;
+      case 4:
+        context.go('/login');
+        break;
     }
   }
 
@@ -44,6 +47,8 @@ class _MainWrapperState extends State<MainWrapper> {
       _selectedIndex = 2;
     } else if (location.startsWith('/profile')) {
       _selectedIndex = 3;
+    } else if (location.startsWith('/login')) {
+      _selectedIndex = 4;
     }
   }
 
@@ -77,6 +82,11 @@ class _MainWrapperState extends State<MainWrapper> {
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
             label: 'Perfil',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.logout_outlined),
+            selectedIcon: Icon(Icons.logout),
+            label: 'Cerrar Sesión',
           ),
         ],
       ),
