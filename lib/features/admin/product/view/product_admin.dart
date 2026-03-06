@@ -25,17 +25,6 @@ class _ProductAdminState extends State<ProductAdmin> {
         ),
         centerTitle: true,
         elevation: 0,
-        actions: [
-          IconButton(
-            tooltip: "Cambiar vista",
-            icon: Icon(isList ? Icons.grid_view : Icons.list),
-            onPressed: () {
-              setState(() {
-                isList = !isList;
-              });
-            },
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -70,6 +59,25 @@ class _ProductAdminState extends State<ProductAdmin> {
           if (isList) const Expanded(child: AdminProductList()),
           if (!isList) const Expanded(child: AdminProductGrid()),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Lista"),
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: "Grid"),
+        ],
+        currentIndex: isList ? 0 : 1,
+        onTap: (index) {
+          setState(() {
+            isList = index == 0;
+          });
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          debugPrint("Nuevo Producto");
+        },
+        label: const Text("Nuevo Producto"),
+        icon: const Icon(Icons.add),
       ),
     );
   }
