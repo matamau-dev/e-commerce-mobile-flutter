@@ -21,26 +21,30 @@ class PriceTag extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (hasDiscount) ...[
-          Text(
-            _formatCurrency(originalPrice!),
-            style: TextStyle(
-              color: Colors.grey.shade500,
-              fontSize: 12,
-              decoration: TextDecoration.lineThrough,
-              fontWeight: FontWeight.w500,
+          Flexible(
+            child: Text(
+              _formatCurrency(originalPrice!),
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.grey.shade500,
+                fontSize: 12,
+                decoration: TextDecoration.lineThrough,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           const SizedBox(width: 6),
         ],
 
-        Text(
-          _formatCurrency(price),
-          style: TextStyle(
-            color: Theme.of(
-              context,
-            ).primaryColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+        Flexible(
+          child: Text(
+            _formatCurrency(price),
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

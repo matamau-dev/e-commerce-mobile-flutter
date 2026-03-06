@@ -2,6 +2,8 @@ import 'package:e_commerce/features/admin/brands/view/brands_view.dart';
 import 'package:e_commerce/features/admin/brands/view_model/brands_view_model.dart';
 import 'package:e_commerce/features/admin/category/view/category.dart';
 import 'package:e_commerce/features/admin/category/view_model/category_view_model.dart';
+import 'package:e_commerce/features/admin/product/view/product_admin.dart';
+import 'package:e_commerce/features/admin/product/view_model/product_admin_view_model.dart';
 import 'package:e_commerce/features/admin/product_line/view/product_line_view.dart';
 import 'package:e_commerce/features/admin/product_line/view_model/product_line_view_model.dart';
 import 'package:e_commerce/features/customer/address/view/addresses_view.dart';
@@ -94,6 +96,19 @@ final appRouter = GoRouter(
                 ),
               ],
               child: const Dashboard(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/products',
+          builder: (context, state) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) => ProductAdminViewModel(),
+                ),
+              ],
+              child: const ProductAdmin(),
             );
           },
         ),

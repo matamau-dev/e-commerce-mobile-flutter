@@ -14,6 +14,7 @@ class ProductCard extends StatelessWidget {
   final String? tagLabel;
   final VoidCallback? onAdd;
   final VoidCallback? onTap;
+  final Widget? actionWidget;
 
   const ProductCard({
     super.key,
@@ -25,6 +26,7 @@ class ProductCard extends StatelessWidget {
     this.tagLabel,
     this.onAdd,
     this.onTap,
+    this.actionWidget,
   });
 
   @override
@@ -114,7 +116,10 @@ class ProductCard extends StatelessWidget {
                             // Asegúrate que PriceTag maneje texto responsive o pequeño
                           ),
                         ),
-                        if (onAdd != null) ...[
+                        if (actionWidget != null) ...[
+                          const SizedBox(width: 4),
+                          actionWidget!,
+                        ] else if (onAdd != null) ...[
                           const SizedBox(width: 4),
                           Material(
                             color: theme.colorScheme.primary,

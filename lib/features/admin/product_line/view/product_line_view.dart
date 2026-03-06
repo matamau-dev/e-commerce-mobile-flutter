@@ -20,7 +20,6 @@ class ProductLineView extends StatelessWidget {
       "Hogar",
       "Accesorios",
     ];
-    bool isSelected = false;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
