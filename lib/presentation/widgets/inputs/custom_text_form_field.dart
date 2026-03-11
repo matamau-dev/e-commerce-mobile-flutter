@@ -81,7 +81,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
 
         filled: true,
-        fillColor: colors.primaryContainer,
+        fillColor: colors.surfaceContainerHighest.withValues(alpha: 0.3),
       ),
     );
   }

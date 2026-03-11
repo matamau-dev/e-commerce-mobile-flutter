@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:e_commerce/features/admin/product/view/widgets/admin_product_grid.dart';
 import 'package:e_commerce/features/admin/product/view/widgets/admin_product_list.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductAdmin extends StatefulWidget {
   const ProductAdmin({super.key});
@@ -74,7 +75,7 @@ class _ProductAdminState extends State<ProductAdmin> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          debugPrint("Nuevo Producto");
+          context.push('/product-form');
         },
         label: const Text("Nuevo Producto"),
         icon: const Icon(Icons.add),

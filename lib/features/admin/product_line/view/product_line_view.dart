@@ -2,6 +2,7 @@ import 'package:e_commerce/features/admin/product_line/view/widget/product_line_
 import 'package:e_commerce/features/admin/product_line/view/widget/product_line_filter.dart';
 import 'package:e_commerce/features/admin/product_line/view_model/product_line_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProductLineView extends StatelessWidget {
@@ -11,7 +12,6 @@ class ProductLineView extends StatelessWidget {
   Widget build(BuildContext context) {
     // 1. Escuchamos al ViewModel
     final lineVM = context.watch<ProductLineViewModel>();
-    final theme = Theme.of(context);
     final List<String> _categories = [
       "Todos",
       "Ropa",
@@ -49,9 +49,7 @@ class ProductLineView extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Aquí abrirás tu diálogo
-        },
+        onPressed: () {},
         label: const Text("Nueva Línea"),
         icon: const Icon(Icons.add),
         elevation: 3,
