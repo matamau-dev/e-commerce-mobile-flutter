@@ -1,3 +1,4 @@
+import 'package:e_commerce/presentation/widgets/inputs/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class AddCategoryDialog extends StatefulWidget {
@@ -58,23 +59,17 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             ),
             const SizedBox(height: 20),
 
-            TextFormField(
+            CustomTextFormField(
               controller: _nameController,
               focusNode: _nameFocus,
-              autofocus: true,
               textInputAction: _isSubCategory
                   ? TextInputAction.next
                   : TextInputAction.done,
-              decoration: InputDecoration(
-                labelText: "Nombre",
-                prefixIcon: const Icon(Icons.edit),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+              label: "Nombre",
+              prefixIcon: Icons.edit,
               validator: (val) =>
                   val == null || val.isEmpty ? "Campo obligatorio" : null,
-              onFieldSubmitted: (_) {
+              onSubmitted: (_) {
                 if (_isSubCategory) {
                   FocusScope.of(context).requestFocus(_dropdownFocus);
                 } else {

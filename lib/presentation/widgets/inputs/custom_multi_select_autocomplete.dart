@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class CustomMultiSelectAutocomplete extends StatefulWidget {
   final List<String> options;
   final String label;
-  String hint;
+  final String hint;
   final List<String> initialSelected;
   final Function(List<String>) onChanged;
-  CustomMultiSelectAutocomplete({
+
+  const CustomMultiSelectAutocomplete({
     super.key,
     required this.options,
     required this.label,
@@ -23,7 +24,9 @@ class CustomMultiSelectAutocomplete extends StatefulWidget {
 class _CustomMultiSelectAutocompleteState
     extends State<CustomMultiSelectAutocomplete> {
   late List<String> _selectedItems;
-  final TextEditingController _controller = TextEditingController();
+  late TextEditingController _fieldController;
+
+  bool get _allSelected => _selectedItems.length == widget.options.length;
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class _CustomMultiSelectAutocompleteState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,13 +48,19 @@ class _CustomMultiSelectAutocompleteState
           ),
         ),
         const SizedBox(height: 8),
+
         Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
+            if (_allSelected) {
+              return const Iterable<String>.empty();
+            }
+
             if (textEditingValue.text.isEmpty) {
               return widget.options.where(
                 (option) => !_selectedItems.contains(option),
               );
             }
+
             return widget.options.where((option) {
               final isMatch = option.toLowerCase().contains(
                 textEditingValue.text.toLowerCase(),
@@ -59,21 +69,31 @@ class _CustomMultiSelectAutocompleteState
               return isMatch && isNotSelected;
             });
           },
+
           onSelected: (String selection) {
             setState(() {
               _selectedItems.add(selection);
-              _controller.clear();
+              _fieldController.clear(); // 👈 limpia input correctamente
             });
+
             widget.onChanged(_selectedItems);
           },
+
           fieldViewBuilder:
               (context, fieldController, focusNode, onFieldSubmitted) {
+                _fieldController = fieldController;
+
                 return TextField(
                   controller: fieldController,
                   focusNode: focusNode,
+                  enabled: !_allSelected, // 👈 deshabilita si todo seleccionado
                   decoration: InputDecoration(
-                    hintText: widget.hint,
+                    hintText: _allSelected
+                        ? "Todas las opciones seleccionadas"
+                        : widget.hint,
+
                     prefixIcon: const Icon(Icons.search, size: 20),
+
                     suffixIcon: fieldController.text.isEmpty
                         ? IconButton(
                             onPressed: () {
@@ -89,23 +109,21 @@ class _CustomMultiSelectAutocompleteState
                             icon: const Icon(Icons.clear, size: 20),
                             onPressed: () {
                               setState(() {
-                                if (_selectedItems.isNotEmpty) {
-                                  fieldController.clear();
-                                }
-                                _controller.clear();
+                                fieldController.clear();
                               });
-                              widget.onChanged([]);
                             },
                           ),
+
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+
                     filled: true,
-                    enabled:
-                        widget.initialSelected.length == widget.options.length,
-                    fillColor:
-                        widget.initialSelected.length == widget.options.length
-                        ? theme.colorScheme.tertiary
+
+                    fillColor: _allSelected
+                        ? theme.colorScheme.surfaceContainerHighest.withValues(
+                            alpha: 0.1,
+                          )
                         : theme.colorScheme.surfaceContainerHighest.withValues(
                             alpha: 0.3,
                           ),
@@ -113,23 +131,30 @@ class _CustomMultiSelectAutocompleteState
                 );
               },
         ),
+
         const SizedBox(height: 8),
+
         Wrap(
           spacing: 8,
           runSpacing: 0,
           children: _selectedItems.map((item) {
             return InputChip(
               label: Text(item, style: const TextStyle(fontSize: 12)),
+
               onDeleted: () {
                 setState(() {
                   _selectedItems.remove(item);
                 });
+
                 widget.onChanged(_selectedItems);
               },
+
               deleteIcon: const Icon(Icons.close, size: 14),
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
+
               backgroundColor: theme.colorScheme.primaryContainer.withValues(
                 alpha: 0.5,
               ),

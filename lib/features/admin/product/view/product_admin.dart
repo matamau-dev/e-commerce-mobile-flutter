@@ -75,6 +75,7 @@ class _ProductAdminState extends State<ProductAdmin> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          debugPrint("Nuevo Producto");
           context.push('/product-form');
         },
         label: const Text("Nuevo Producto"),

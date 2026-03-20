@@ -1,3 +1,4 @@
+import 'package:e_commerce/presentation/widgets/inputs/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class CategoryFormDialog extends StatefulWidget {
@@ -42,28 +43,11 @@ class _CategoryFormDialogState extends State<CategoryFormDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Nombre de la categoría",
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          TextField(
-            autofocus: true,
+          CustomTextFormField(
             controller: _controller,
-            decoration: InputDecoration(
-              hintText: "Ej: Electrónica",
-              filled: true,
-              fillColor: Colors.grey[100],
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              prefixIcon: const Icon(Icons.edit_note),
-            ),
+            label: "Nombre",
+            hint: "Ej: Electrónica",
+            prefixIcon: Icons.edit_note,
           ),
           if (widget.isSubCategory) ...[
             const SizedBox(height: 20),

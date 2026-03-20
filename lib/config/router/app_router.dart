@@ -1,10 +1,12 @@
 import 'package:e_commerce/features/admin/brands/view/brands_view.dart';
 import 'package:e_commerce/features/admin/brands/view_model/brands_view_model.dart';
-import 'package:e_commerce/features/admin/category/view/category.dart';
+import 'package:e_commerce/features/admin/category/view/category_schema_editor_view.dart';
+import 'package:e_commerce/features/admin/category/view/category_view.dart';
+import 'package:e_commerce/features/admin/category/view_model/category_schema_editor_view_model.dart';
 import 'package:e_commerce/features/admin/category/view_model/category_view_model.dart';
 import 'package:e_commerce/features/admin/product/view/product_admin.dart';
 import 'package:e_commerce/features/admin/product/view_model/product_admin_view_model.dart';
-import 'package:e_commerce/features/admin/product_line/view/product_formd_view.dart';
+import 'package:e_commerce/features/admin/product/view/product_form_view.dart';
 import 'package:e_commerce/features/admin/product_line/view/product_line_view.dart';
 import 'package:e_commerce/features/admin/product_line/view_model/product_line_view_model.dart';
 import 'package:e_commerce/features/customer/address/view/addresses_view.dart';
@@ -101,7 +103,7 @@ final appRouter = GoRouter(
           },
         ),
         GoRoute(
-          path: '/products',
+          path: '/',
           builder: (context, state) {
             return MultiProvider(
               providers: [
@@ -136,6 +138,19 @@ final appRouter = GoRouter(
                 ),
               ],
               child: const CategoryView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/new-category',
+          builder: (context, state) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) => CategorySchemaEditorViewModel(),
+                ),
+              ],
+              child: const CategorySchemaEditorView(),
             );
           },
         ),

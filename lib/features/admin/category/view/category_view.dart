@@ -1,9 +1,11 @@
 import 'package:e_commerce/features/admin/category/view/dialog/add_category_dialog.dart';
 import 'package:e_commerce/features/admin/category/view/dialog/category_form_dialog.dart';
 import 'package:e_commerce/features/admin/category/view/dialog/delete_confirm_dialog.dart';
+import 'package:e_commerce/features/admin/category/view/widgets/category_header.dart';
 import 'package:e_commerce/features/admin/shared/widgets/admin_section.dart';
 import 'package:e_commerce/features/admin/category/view_model/category_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class CategoryView extends StatelessWidget {
@@ -15,12 +17,14 @@ class CategoryView extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              _categoryHeader(context),
-              const SizedBox(height: 16),
+        child: categoryViewModel.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    const CategoryHeader(),
+                    const SizedBox(height: 16),
               AdminSection(
                 items: categoryViewModel.categories,
                 title: "Categorias",
@@ -51,41 +55,22 @@ class CategoryView extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _onAddNewEntity(context, categoryViewModel),
+        onPressed: () => context.push("/new-category"),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 10,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         icon: const Icon(Icons.add, size: 28),
         label: const Text(
-          'Nueva categoría',
+          'Nueva Categoría',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
     );
   }
 
-  Container _categoryHeader(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        "Gestión de Categorias",
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          decoration: TextDecoration.underline,
-          decorationThickness: 2,
-        ),
-      ),
-    );
-  }
 }
+
 
 void _openCategoryDialog(
   BuildContext context,
@@ -106,9 +91,14 @@ void _openCategoryDialog(
   if (result != null && currentName != null) {
     final String newName = result['name'];
     if (isSub) {
-      vm.editSubCategory(currentName, newName);
+      await vm.editSubCategory(currentName, newName);
     } else {
-      vm.editCategory(currentName, newName);
+      await vm.editCategory(currentName, newName);
+    }
+    if (context.mounted && vm.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${vm.errorMessage}")),
+      );
     }
   }
 }
@@ -126,9 +116,14 @@ void _showDeleteDialog(
   if (shouldDelete == true) {
     // Buscamos si es categoría o subcategoría y borramos
     if (vm.categories.contains(itemName)) {
-      vm.deleteCategory(itemName);
+      await vm.deleteCategory(itemName);
     } else {
-      vm.deleteSubCategory(itemName);
+      await vm.deleteSubCategory(itemName);
+    }
+    if (context.mounted && vm.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${vm.errorMessage}")),
+      );
     }
   }
 }
@@ -150,12 +145,21 @@ void _onAddNewEntity(BuildContext context, CategoryViewModel vm) async {
     debugPrint("isSub => $isSub");
 
     if (isSub) {
-      vm.addSubCategory(name);
+      await vm.addSubCategory(name);
     } else {
-      vm.addCategory(name);
+      await vm.addCategory(name);
     }
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("$name guardado correctamente")));
+    
+    if (context.mounted) {
+      if (vm.errorMessage != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: ${vm.errorMessage}")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("$name guardado correctamente")),
+        );
+      }
+    }
   }
 }

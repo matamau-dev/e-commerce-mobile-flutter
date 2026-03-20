@@ -85,13 +85,15 @@ class _AdminWrapperState extends State<AdminWrapper> {
                     leading: const Icon(Icons.inventory_2_outlined),
                     title: const Text("Catálogo"),
                     initiallyExpanded:
-                        _isActive('/products') ||
+                        // _isActive('/type-product') ||
+                        _isActive('/') ||
                         _isActive('/stocks') ||
                         _isActive('/categories') ||
                         _isActive("/brands") ||
                         _isActive("/models"),
                     children: [
-                      _subMenuItem('Productos', '/products'),
+                      _subMenuItem('Productos', '/'),
+                      // _subMenuItem('Tipos de Producto', '/type-product'),
                       _subMenuItem('Inventario', '/stocks'),
                       _subMenuItem('Categorías', '/categories'),
                       _subMenuItem('Marcas', '/brands'),

@@ -8,36 +8,105 @@ class CategoryViewModel extends ChangeNotifier {
     "Sub Category 3",
   ];
 
+  bool _isLoading = false;
+  String? _errorMessage;
+
   List<String> get categories => _categories;
   List<String> get subCategories => _subCategories;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
-  void addCategory(String name) {
-    _categories.add(name);
+  void _setLoading(bool value) {
+    _isLoading = value;
     notifyListeners();
   }
 
-  void addSubCategory(String name) {
-    _subCategories.add(name);
+  void _setError(String? message) {
+    _errorMessage = message;
     notifyListeners();
   }
 
-  void deleteCategory(String name) {
-    _categories.remove(name);
-    notifyListeners();
+  Future<void> addCategory(String name) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 500)); // Simulando red
+      _categories.add(name);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 
-  void deleteSubCategory(String name) {
-    _subCategories.remove(name);
-    notifyListeners();
+  Future<void> addSubCategory(String name) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+      _subCategories.add(name);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 
-  void editCategory(String name, String newName) {
-    _categories[_categories.indexOf(name)] = newName;
-    notifyListeners();
+  Future<void> deleteCategory(String name) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+      _categories.remove(name);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 
-  void editSubCategory(String name, String newName) {
-    _subCategories[_subCategories.indexOf(name)] = newName;
-    notifyListeners();
+  Future<void> deleteSubCategory(String name) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+      _subCategories.remove(name);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> editCategory(String name, String newName) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+      final index = _categories.indexOf(name);
+      if (index != -1) {
+        _categories[index] = newName;
+      }
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> editSubCategory(String name, String newName) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+      final index = _subCategories.indexOf(name);
+      if (index != -1) {
+        _subCategories[index] = newName;
+      }
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 }
