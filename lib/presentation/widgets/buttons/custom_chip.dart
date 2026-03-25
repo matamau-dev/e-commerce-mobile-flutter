@@ -25,15 +25,13 @@ class CustomChip extends StatelessWidget {
       onPressed: onPressed,
       backgroundColor:
           backgroundColor ??
-          (isSelected
-              ? theme.colorScheme.primary
-              : theme.colorScheme.surfaceVariant),
+          (isSelected ? theme.colorScheme.primary : theme.colorScheme.surface),
       labelStyle: TextStyle(
         color:
             labelColor ??
             (isSelected
                 ? theme.colorScheme.onPrimary
-                : theme.colorScheme.onSurfaceVariant),
+                : theme.colorScheme.onSurface),
         fontSize: 12,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
       ),

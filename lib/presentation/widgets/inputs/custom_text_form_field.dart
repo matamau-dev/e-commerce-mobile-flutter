@@ -19,6 +19,8 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool enabled;
   final bool readOnly;
+  final int? minLines;
+  final int? maxLines;
 
   const CustomTextFormField({
     super.key,
@@ -37,6 +39,8 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.enabled = true,
     this.readOnly = false,
+    this.minLines,
+    this.maxLines,
   });
 
   @override
@@ -48,7 +52,8 @@ class CustomTextFormField extends StatelessWidget {
       onChanged: onChanged,
       onFieldSubmitted: onSubmitted,
       validator: validator,
-
+      maxLines: maxLines,
+      minLines: minLines,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       obscureText: obscureText,

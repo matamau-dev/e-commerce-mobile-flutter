@@ -15,7 +15,7 @@ class AppColors {
   static const Color onTertiary = Color(0xFFFFFFFF);
   static const Color tertiaryContainer = Color(0xFFCFD8DC);
 
-  static const Color background = Color(0xFFF2F4F5);
+  static const Color background = Color(0xFFDDE4E7);
   static const Color onBackground = Color(0xFF191C1C);
 
   static const Color lowStock = Color(0xFFB71C1C);

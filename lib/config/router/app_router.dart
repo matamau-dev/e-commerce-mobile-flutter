@@ -9,6 +9,10 @@ import 'package:e_commerce/features/admin/product/view_model/product_admin_view_
 import 'package:e_commerce/features/admin/product/view/product_form_view.dart';
 import 'package:e_commerce/features/admin/product_line/view/product_line_view.dart';
 import 'package:e_commerce/features/admin/product_line/view_model/product_line_view_model.dart';
+import 'package:e_commerce/features/admin/suppliers/view/suppliers_details_view.dart';
+import 'package:e_commerce/features/admin/suppliers/view/suppliers_form_view.dart';
+import 'package:e_commerce/features/admin/suppliers/view/suppliers_view.dart';
+import 'package:e_commerce/features/admin/suppliers/view_model/suppliers_view_model.dart';
 import 'package:e_commerce/features/customer/address/view/addresses_view.dart';
 import 'package:e_commerce/features/customer/address/view_model/address_view_model.dart';
 import 'package:e_commerce/features/admin/dashboard/view/dashboard_view.dart';
@@ -71,7 +75,6 @@ final appRouter = GoRouter(
         );
       },
     ),
-
     GoRoute(
       path: '/login',
       builder: (context, state) {
@@ -175,6 +178,46 @@ final appRouter = GoRouter(
                 ),
               ],
               child: const ProductLineView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/suppliers',
+          builder: (context, state) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) => SuppliersViewModel(),
+                ),
+              ],
+              child: const SuppliersView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/supplier-details',
+          builder: (context, state) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) => SuppliersViewModel(),
+                ),
+              ],
+              child: SuppliersDetailsView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/supplier-form',
+          builder: (context, state) {
+            final bool isEdit = state.uri.queryParameters['edit'] == 'true';
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) => SuppliersViewModel(),
+                ),
+              ],
+              child: SuppliersFormView(isEditMode: isEdit),
             );
           },
         ),

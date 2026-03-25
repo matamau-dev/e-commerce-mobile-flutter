@@ -37,79 +37,30 @@ class _CategorySchemaEditorViewState extends State<CategorySchemaEditorView> {
               ],
             ),
           ),
-          body: TabBarView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
+          body: SafeArea(
+            child: TabBarView(
+              children: [
+                _CategoryTabContent(theme, categorySchemaEditorViewModel),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const Icon(
+                      Icons.construction,
+                      size: 64,
+                      color: Colors.grey,
+                    ),
                     const SizedBox(height: 16),
-                    CustomTextFormField(
-                      label: "Nombre de la categoría",
-                      suffixIcon: Icon(Icons.category),
-                      hint: "EJ: Ropa",
-                    ),
-                    const SizedBox(height: 8),
                     Text(
-                      "Formulario para agregar productos a la categoría",
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
+                      "Configuración de Sub Categorías\n(Próximamente)",
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.grey,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-
-                    Expanded(
-                      child: categorySchemaEditorViewModel.attributes.isEmpty
-                          ? Center(
-                              child: Text(
-                                "No hay atributos configurados.\nToca el botón '+' para agregar uno.",
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: categorySchemaEditorViewModel
-                                  .attributes
-                                  .length,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              itemBuilder: (context, index) {
-                                final attribute = categorySchemaEditorViewModel
-                                    .attributes[index];
-                                return AttributeConfigCard(
-                                  attribute: attribute,
-                                  onDelete: () => categorySchemaEditorViewModel
-                                      .removeAttribute(index),
-                                  onAttributeChanged: (updatedAttribute) {
-                                    categorySchemaEditorViewModel
-                                        .updateAttribute(
-                                          updatedAttribute,
-                                          index,
-                                        );
-                                  },
-                                );
-                              },
-                            ),
                     ),
                   ],
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.construction, size: 64, color: Colors.grey),
-                  const SizedBox(height: 16),
-                  Text(
-                    "Configuración de Sub Categorías\n(Próximamente)",
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () => categorySchemaEditorViewModel.addEmptyAttribute(),
@@ -126,6 +77,65 @@ class _CategorySchemaEditorViewState extends State<CategorySchemaEditorView> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Padding _CategoryTabContent(
+    ThemeData theme,
+    CategorySchemaEditorViewModel categorySchemaEditorViewModel,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 16),
+          CustomTextFormField(
+            label: "Nombre de la categoría",
+            suffixIcon: Icon(Icons.category),
+            hint: "EJ: Ropa",
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Formulario para agregar productos a la categoría",
+            style: theme.textTheme.bodyLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 4),
+
+          Expanded(
+            child: categorySchemaEditorViewModel.attributes.isEmpty
+                ? Center(
+                    child: Text(
+                      "No hay atributos configurados.\nToca el botón '+' para agregar uno.",
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: categorySchemaEditorViewModel.attributes.length,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    itemBuilder: (context, index) {
+                      final attribute =
+                          categorySchemaEditorViewModel.attributes[index];
+                      return AttributeConfigCard(
+                        attribute: attribute,
+                        onDelete: () => categorySchemaEditorViewModel
+                            .removeAttribute(index),
+                        onAttributeChanged: (updatedAttribute) {
+                          categorySchemaEditorViewModel.updateAttribute(
+                            updatedAttribute,
+                            index,
+                          );
+                        },
+                      );
+                    },
+                  ),
+          ),
+        ],
       ),
     );
   }
