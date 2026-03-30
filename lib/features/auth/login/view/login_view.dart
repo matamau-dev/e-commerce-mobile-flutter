@@ -43,6 +43,8 @@ class LoginView extends StatelessWidget {
                       prefixIcon: Icons.person_2,
                       validator: loginViewModel.validateLogin,
                       textInputAction: TextInputAction.next,
+                      maxLines: null,
+                      minLines: null,
                       onSubmitted: (_) {
                         loginViewModel.loginFocusNode.unfocus();
                         loginViewModel.passwordFocusNode.requestFocus();

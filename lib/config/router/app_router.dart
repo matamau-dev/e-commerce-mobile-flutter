@@ -13,6 +13,9 @@ import 'package:e_commerce/features/admin/suppliers/view/suppliers_details_view.
 import 'package:e_commerce/features/admin/suppliers/view/suppliers_form_view.dart';
 import 'package:e_commerce/features/admin/suppliers/view/suppliers_view.dart';
 import 'package:e_commerce/features/admin/suppliers/view_model/suppliers_view_model.dart';
+import 'package:e_commerce/features/admin/supply/view/new_supply_view.dart';
+import 'package:e_commerce/features/admin/supply/view/supply_view.dart';
+import 'package:e_commerce/features/admin/supply/view_model/supply_view_model.dart';
 import 'package:e_commerce/features/customer/address/view/addresses_view.dart';
 import 'package:e_commerce/features/customer/address/view_model/address_view_model.dart';
 import 'package:e_commerce/features/admin/dashboard/view/dashboard_view.dart';
@@ -76,7 +79,7 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/login',
+      path: '/',
       builder: (context, state) {
         return MultiProvider(
           providers: [
@@ -106,7 +109,7 @@ final appRouter = GoRouter(
           },
         ),
         GoRoute(
-          path: '/',
+          path: '/products',
           builder: (context, state) {
             return MultiProvider(
               providers: [
@@ -218,6 +221,28 @@ final appRouter = GoRouter(
                 ),
               ],
               child: SuppliersFormView(isEditMode: isEdit),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/purchase-orders',
+          builder: (context, state) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(create: (context) => SupplyViewModel()),
+              ],
+              child: SupplyView(),
+            );
+          },
+        ),
+        GoRoute(
+          path: '/new-supply',
+          builder: (context, state) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(create: (context) => SupplyViewModel()),
+              ],
+              child: NewSupplyView(),
             );
           },
         ),
