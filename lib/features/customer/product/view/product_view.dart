@@ -56,7 +56,7 @@ class ProductView extends StatelessWidget {
                         return CustomChip(
                           label: category,
                           onPressed: () {
-                            print("Navegar a $category");
+                            debugPrint("Navegar a $category");
                           },
                         );
                       }).toList(),

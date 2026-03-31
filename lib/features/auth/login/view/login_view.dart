@@ -109,6 +109,7 @@ class LoginView extends StatelessWidget {
                         CustomButton(
                           text: "Registrate AQUI!!",
                           buttonType: ButtonType.textButton,
+                          textColor: Theme.of(context).colorScheme.primary,
                           onPressed: () {
                             context.push("/register");
                           },

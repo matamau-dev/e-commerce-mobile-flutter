@@ -54,7 +54,7 @@ class RelatedProductsList extends StatelessWidget {
                   price: product.price,
                   imageUrl: product.image,
                   onTap: () {
-                    print("Ir al producto ${product.title}");
+                    debugPrint("Ir al producto ${product.title}");
                   },
                   onAdd: () {},
                 ),

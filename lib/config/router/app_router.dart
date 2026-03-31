@@ -65,7 +65,7 @@ final _adminNavigatorKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/dashboard',
+  initialLocation: '/',
   routes: [
     GoRoute(
       path: '/register',

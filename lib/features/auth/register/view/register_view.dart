@@ -3,6 +3,7 @@ import 'package:e_commerce/presentation/widgets/app_bars/custom_app_bar.dart';
 import 'package:e_commerce/presentation/widgets/buttons/custom_button.dart';
 import 'package:e_commerce/presentation/widgets/inputs/custom_text_form_field.dart';
 import 'package:e_commerce/presentation/widgets/inputs/password_input.dart';
+import 'package:e_commerce/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class RegisterView extends StatelessWidget {
             child: SingleChildScrollView(
               child: Form(
                 key: registerViewModel.formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
                     const SizedBox(height: 32),
@@ -80,6 +82,21 @@ class RegisterView extends StatelessWidget {
                         registerViewModel.passwordFocusNode.requestFocus();
                       },
                     ),
+                    const SizedBox(height: 20),
+
+                    CustomTextFormField(
+                      label: "Telefono",
+                      hint: "1234567890",
+                      keyboardType: TextInputType.phone,
+                      prefixIcon: Icons.phone,
+                      controller: registerViewModel.phoneController,
+                      validator: registerViewModel.validatePhone,
+                      textInputAction: TextInputAction.next,
+                      onSubmitted: (_) {
+                        registerViewModel.emailFocusNode.unfocus();
+                        registerViewModel.passwordFocusNode.requestFocus();
+                      },
+                    ),
 
                     const SizedBox(height: 20),
 
@@ -106,9 +123,27 @@ class RegisterView extends StatelessWidget {
                       focusNode: registerViewModel.confirmPasswordFocusNode,
                       onSubmitted: (_) async {
                         registerViewModel.confirmPasswordFocusNode.unfocus();
-                        final success = await registerViewModel.onFormSubmit();
-                        if (success && context.mounted) {
-                          context.push("/login");
+                        try {
+                          await registerViewModel.onFormSubmit();
+                          if (context.mounted) {
+                            CustomSnackbar.show(
+                              context,
+                              message: 'Usuario registrado exitosamente',
+                              type: SnackbarType.success,
+                            );
+                            // context.push('/login');
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            CustomSnackbar.show(
+                              context,
+                              message: e.toString().replaceAll(
+                                'Exception: ',
+                                '',
+                              ),
+                              type: SnackbarType.error,
+                            );
+                          }
                         }
                       },
                     ),
@@ -122,13 +157,32 @@ class RegisterView extends StatelessWidget {
                             : "Registrarse",
                         icon: Icons.arrow_forward,
                         isIconRight: true,
-                        onPressed: registerViewModel.isLoading
+                        onPressed: registerViewModel.isLoading || !registerViewModel.isFormValid
                             ? null
                             : () async {
-                                final success = await registerViewModel
-                                    .onFormSubmit();
-                                if (success && context.mounted) {
-                                  context.push("/login");
+                                try {
+                                  await registerViewModel.onFormSubmit();
+                                  if (context.mounted) {
+                                    CustomSnackbar.show(
+                                      context,
+                                      message:
+                                          'Usuario registrado exitosamente',
+                                      type: SnackbarType.success,
+                                    );
+                                    // context.push('/login');
+                                  }
+                                } catch (e) {
+                                  if (context.mounted) {
+                                    debugPrint(e.toString());
+                                    CustomSnackbar.show(
+                                      context,
+                                      message: e.toString().replaceAll(
+                                        'Exception: ',
+                                        '',
+                                      ),
+                                      type: SnackbarType.error,
+                                    );
+                                  }
                                 }
                               },
                       ),
@@ -142,7 +196,7 @@ class RegisterView extends StatelessWidget {
                         const Text("¿Ya tienes cuenta?"),
                         TextButton(
                           onPressed: () {
-                            context.push('/login');
+                            // context.push('/login');
                           },
                           child: const Text("Inicia Sesión"),
                         ),

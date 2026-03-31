@@ -46,7 +46,7 @@ class ProductGrid extends StatelessWidget {
           },
 
           onAdd: () {
-            print("Agregando ID ${product.id} al carrito");
+            debugPrint("Agregando ID ${product.id} al carrito");
           },
         );
       },
