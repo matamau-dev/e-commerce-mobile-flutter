@@ -1,4 +1,3 @@
-// core/utils/error_handler.dart
 import 'package:dio/dio.dart';
 import '../exceptions/api_exception.dart';
 
@@ -18,8 +17,7 @@ class ErrorHandler {
 
         return ApiException(
           statusCode: data['status'] ?? 400,
-          message:
-              finalMessage, // Ahora contiene los 4 errores separados por línea
+          message: finalMessage,
         );
       }
     }

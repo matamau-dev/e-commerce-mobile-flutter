@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 class AttributeConfigCard extends StatelessWidget {
   final CategoryAttribute attribute;
   final VoidCallback onDelete;
-  final Function(CategoryAttribute)
-  onAttributeChanged; // Cambio de nombre para claridad
+  final Function(CategoryAttribute) onAttributeChanged;
 
   const AttributeConfigCard({
     super.key,
@@ -38,7 +37,6 @@ class AttributeConfigCard extends StatelessWidget {
             ),
           ),
 
-          // Selector de Tipo
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: DropdownButton<AttributeType>(
@@ -58,13 +56,11 @@ class AttributeConfigCard extends StatelessWidget {
             ),
           ),
 
-          // Renderizado condicional de opciones
           if (attribute.type == AttributeType.select ||
               attribute.type == AttributeType.multiSelect)
             _OptionsEditor(
               attribute: attribute,
               onChanged: (newOptions) {
-                // Enviamos el atributo con la nueva lista de opciones
                 onAttributeChanged(attribute.copyWith(options: newOptions));
               },
             ),

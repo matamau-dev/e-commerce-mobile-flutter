@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:e_commerce/config/router/app_router.dart';
 import 'package:e_commerce/config/theme/app_theme.dart';
 
-// Importa tus ViewModels
 import 'package:e_commerce/features/customer/cart/view_model/cart_view_model.dart';
 import 'package:e_commerce/features/customer/address/view_model/address_view_model.dart';
 import 'package:e_commerce/features/customer/payment/view_model/payments_view_model.dart';

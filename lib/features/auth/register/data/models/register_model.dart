@@ -1,7 +1,6 @@
 import 'package:e_commerce/features/auth/register/domain/entities/user_registration.dart';
 
 class RegisterModel {
-  // Estos nombres coinciden EXACTAMENTE con tu JSON de la API
   final String name;
   final String email;
   final String phone;
@@ -14,7 +13,6 @@ class RegisterModel {
     required this.password,
   });
 
-  // Mapper: De Entidad (Flutter) a Modelo (JSON para la API)
   Map<String, dynamic> toJson() => {
     "name": name,
     "email": email,
@@ -22,7 +20,6 @@ class RegisterModel {
     "password": password,
   };
 
-  // Factory para crear el modelo desde la entidad
   factory RegisterModel.fromEntity(UserRegistration entity) => RegisterModel(
     name: entity.fullName,
     email: entity.email,

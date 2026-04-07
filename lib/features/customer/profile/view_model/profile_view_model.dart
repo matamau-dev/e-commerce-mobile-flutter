@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProfileViewModel extends ChangeNotifier {
-  // Mock User
   UserModel _user = const UserModel(
     id: "u1",
     name: "Mauricio Mátuz",
@@ -25,10 +24,8 @@ class ProfileViewModel extends ChangeNotifier {
   }
 
   void updateProfileImage() {
-    // Mock updating image to a different one
-    // In a real app, this would involve picking an image file and uploading it
     final newImage = _user.imageUrl.contains("300")
-        ? "https://i.pravatar.cc/301" // Just toggling ID to show change
+        ? "https://i.pravatar.cc/301"
         : "https://i.pravatar.cc/300";
 
     _user = _user.copyWith(imageUrl: newImage);
@@ -202,7 +199,6 @@ class ProfileViewModel extends ChangeNotifier {
   void onSectionActionSelected(BuildContext context, ProfileSection section) {
     if (section.actionId == 'view_all_orders') {
       debugPrint("Ver todos los pedidos");
-      // Example logic for "Ver todos"
     }
   }
 }

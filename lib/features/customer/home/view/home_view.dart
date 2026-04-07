@@ -12,7 +12,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ViewModel is provided by GoRouter shell
     final viewModel = context.watch<HomeViewModel>();
 
     return GestureDetector(

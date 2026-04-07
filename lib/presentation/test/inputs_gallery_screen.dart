@@ -18,7 +18,6 @@ class InputsGalleryScreen extends StatefulWidget {
 class _InputsGalleryScreenState extends State<InputsGalleryScreen> {
   final _formKey = GlobalKey<FormState>();
 
-
   bool _switchValue = false;
   bool _checkboxValue = false;
   String? _radioValue = 'option1';
@@ -49,9 +48,7 @@ class _InputsGalleryScreenState extends State<InputsGalleryScreen> {
               ),
               const SizedBox(height: 16),
 
-              const PasswordInput(
-                validator: null,
-              ),
+              const PasswordInput(validator: null),
               const SizedBox(height: 32),
 
               const Text(

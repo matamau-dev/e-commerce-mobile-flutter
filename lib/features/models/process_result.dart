@@ -4,7 +4,6 @@ class ProcessResult {
 
   ProcessResult({required this.success, this.error});
 
-  // Factory opcional para hacer el código más corto
   factory ProcessResult.failure(String message) =>
       ProcessResult(success: false, error: message);
 

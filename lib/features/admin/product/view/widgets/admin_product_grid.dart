@@ -31,10 +31,7 @@ class AdminProductGrid extends StatelessWidget {
             children: [
               IconButton(
                 padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(
-                  minWidth: 32,
-                  minHeight: 32,
-                ), // Evita que el IconButton crezca demasiado internamente
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                 iconSize: 20,
                 icon: const Icon(Icons.edit_outlined),
                 color: theme.colorScheme.primary,

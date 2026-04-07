@@ -29,16 +29,15 @@ class SuppliersDetailsView extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // HEADER: Imagen y Nombre
             Center(
               child: Column(
                 children: [
                   CustomNetworkImage(
                     imageURL:
                         "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-                    height: 120, // Más contenido arriba del "fold"
+                    height: 120,
                     width: 120,
-                    borderRadius: 60, // Circular para perfil
+                    borderRadius: 60,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -58,7 +57,6 @@ class SuppliersDetailsView extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // SECCIÓN: Información de contacto
             _buildSectionTitle(context, "Información de Contacto"),
             const SizedBox(height: 8),
             SuppliersCard(
@@ -86,7 +84,6 @@ class SuppliersDetailsView extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // SECCIÓN: Productos (Con botón de agregar)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -113,7 +110,6 @@ class SuppliersDetailsView extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // ACCIONES
             Row(
               children: [
                 Expanded(
@@ -152,8 +148,7 @@ class SuppliersDetailsView extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) =>
-          const ProductSelectionModal(), // El buscador que definimos antes
+      builder: (context) => const ProductSelectionModal(),
     );
   }
 }

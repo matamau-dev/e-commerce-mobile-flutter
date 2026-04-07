@@ -17,8 +17,6 @@ class OrdersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // In a real app, you might fetch data here based on filter.
-    // For now, we assume ViewModel has all data and we filter it.
     final allOrders = context.read<OrderViewModel>().getOrders(
       filterStatuses: filterStatuses,
     );

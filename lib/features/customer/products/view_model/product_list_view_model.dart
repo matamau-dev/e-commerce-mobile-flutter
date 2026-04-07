@@ -32,15 +32,14 @@ class ProductListViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(milliseconds: 800)); // Simulating API
+    await Future.delayed(const Duration(milliseconds: 800));
 
-    // Mock Data
     _allProducts = List.generate(30, (index) {
       double price = (index + 1) * 50.0 + (index % 5) * 10;
       String cat = index % 3 == 0
           ? "Electrónica"
           : (index % 3 == 1 ? "Ropa" : "Hogar");
-      // Override initial category filter from mock if needed, or just generate mixed
+
       return Product(
         "$index",
         "Producto $index",
@@ -86,7 +85,7 @@ class ProductListViewModel extends ChangeNotifier {
       final matchesCategory =
           _selectedCategory == 'Todos' ||
           _selectedCategory == 'Sin categoría' ||
-          product.category == _selectedCategory; // Simple match
+          product.category == _selectedCategory;
       final matchesPrice =
           product.price >= _priceRange.start &&
           product.price <= _priceRange.end;

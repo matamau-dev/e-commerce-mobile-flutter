@@ -21,7 +21,6 @@ class OrderDetailView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Order Header
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -86,7 +85,6 @@ class OrderDetailView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // Shipping Address
             Text(
               "Dirección de Envío",
               style: theme.textTheme.titleMedium?.copyWith(
@@ -117,7 +115,6 @@ class OrderDetailView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // Products
             Text(
               "Productos (${order.itemCount})",
               style: theme.textTheme.titleMedium?.copyWith(
@@ -213,7 +210,6 @@ class OrderDetailView extends StatelessWidget {
             ],
             const Divider(height: 32),
 
-            // Order Summary
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -5,7 +5,6 @@ class CategorySchemaService {
   bool isAttributeComplete(CategoryAttribute config) {
     if (config.name.isEmpty) return false;
 
-    // Lógica de Backend: Si es selección, debe tener opciones
     if (_isSelectorType(config.type)) {
       return config.options.isNotEmpty;
     }

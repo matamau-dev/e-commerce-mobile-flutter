@@ -1,6 +1,6 @@
 class AddressModel {
   final String id;
-  final String name; // e.g. "Casa", "Trabajo"
+  final String name;
   final String street;
   final String exteriorNumber;
   final String? interiorNumber;

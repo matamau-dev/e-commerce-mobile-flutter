@@ -30,7 +30,7 @@ class CategoryViewModel extends ChangeNotifier {
     _setLoading(true);
     _setError(null);
     try {
-      await Future.delayed(const Duration(milliseconds: 500)); // Simulando red
+      await Future.delayed(const Duration(milliseconds: 500));
       _categories.add(name);
     } catch (e) {
       _setError(e.toString());

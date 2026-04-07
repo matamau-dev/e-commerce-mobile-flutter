@@ -102,7 +102,6 @@ void _showDeleteDialog(
   );
 
   if (shouldDelete == true) {
-    // Buscamos si es categoría o subcategoría y borramos
     if (vm.brands.contains(itemName)) {
       vm.deleteBrand(itemName);
     }

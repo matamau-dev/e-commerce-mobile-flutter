@@ -18,7 +18,6 @@ class _SupplyViewState extends State<SupplyView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. TÍTULO Y BOTÓN DE ACCIÓN
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -26,7 +25,7 @@ class _SupplyViewState extends State<SupplyView> {
                     "Gestión de Suministros",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  // Botón circular o pequeño para agregar nueva orden
+
                   IconButton.filled(
                     onPressed: () => context.push("/new-supply"),
                     icon: const Icon(Icons.add),
@@ -35,8 +34,6 @@ class _SupplyViewState extends State<SupplyView> {
               ),
               const SizedBox(height: 20),
 
-              // 2. INDICADORES (Tus KPI Cards actuales pero con estilo)
-              // Puedes usar un PageView o un ListView horizontal si quieres ahorrar espacio vertical
               SizedBox(
                 height: 140,
                 child: ListView(
@@ -66,18 +63,16 @@ class _SupplyViewState extends State<SupplyView> {
 
               const SizedBox(height: 32),
 
-              // 3. SECCIÓN DE ACTIVIDAD RECIENTE (Aquí está el alma de la vista)
               const Text(
                 "Órdenes de Compra Recientes",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
 
-              // Lista de órdenes reales
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 4, // Esto vendría de tu backend
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   return _buildOrderListItem(context);
                 },
@@ -105,7 +100,7 @@ Widget _buildOrderListItem(BuildContext context) {
           color: Colors.grey.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Icon(Icons.business), // Aquí iría el logo del proveedor
+        child: const Icon(Icons.business),
       ),
       title: const Text(
         "Distribuidora Global",
@@ -133,9 +128,7 @@ Widget _buildOrderListItem(BuildContext context) {
           ),
         ],
       ),
-      onTap: () {
-        // Ir al detalle de la orden
-      },
+      onTap: () {},
     ),
   );
 }
@@ -147,11 +140,11 @@ Widget _buildCompactKpi(
   IconData icon,
 ) {
   return Container(
-    width: 150, // Ancho fijo para que el ListView horizontal funcione bien
+    width: 150,
     margin: const EdgeInsets.only(right: 16),
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: color.withValues(alpha: 0.1), // Fondo muy suave del color del tema
+      color: color.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(20),
       border: Border.all(color: color.withValues(alpha: 0.2)),
     ),

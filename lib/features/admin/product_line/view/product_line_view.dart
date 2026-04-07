@@ -10,7 +10,6 @@ class ProductLineView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. Escuchamos al ViewModel
     final lineVM = context.watch<ProductLineViewModel>();
     final List<String> _categories = [
       "Todos",

@@ -9,7 +9,6 @@ class NewSupplyView extends StatefulWidget {
 }
 
 class _NewSupplyViewState extends State<NewSupplyView> {
-  // Datos simulados (Esto vendría de tu Provider/Backend)
   String? selectedSupplier;
   List<Map<String, dynamic>> selectedProducts = [
     {"name": "Leche Entera 1L", "price": 15.50, "qty": 10},
@@ -32,7 +31,6 @@ class _NewSupplyViewState extends State<NewSupplyView> {
       ),
       body: Column(
         children: [
-          // 1. SECCIÓN DE PROVEEDOR
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: _buildSupplierSelector(colors),
@@ -40,7 +38,6 @@ class _NewSupplyViewState extends State<NewSupplyView> {
 
           const Divider(height: 1),
 
-          // 2. LISTA DE PRODUCTOS A PEDIR
           Expanded(
             child: selectedProducts.isEmpty
                 ? _buildEmptyState()
@@ -55,7 +52,6 @@ class _NewSupplyViewState extends State<NewSupplyView> {
                   ),
           ),
 
-          // 3. BOTÓN PARA AGREGAR MÁS PRODUCTOS
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextButton.icon(
@@ -67,12 +63,9 @@ class _NewSupplyViewState extends State<NewSupplyView> {
         ],
       ),
 
-      // 4. RESUMEN Y ACCIÓN FINAL
       bottomNavigationBar: _buildBottomSummary(colors),
     );
   }
-
-  // --- WIDGETS DE APOYO ---
 
   Widget _buildSupplierSelector(ColorScheme colors) {
     return Container(
@@ -92,7 +85,6 @@ class _NewSupplyViewState extends State<NewSupplyView> {
         subtitle: const Text("Toca para buscar en tu lista"),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () {
-          // Aquí abrirías un SearchDelegate o Modal con tus proveedores
           setState(() => selectedSupplier = "Distribuidora de Lácteos S.A.");
         },
       ),
@@ -128,7 +120,7 @@ class _NewSupplyViewState extends State<NewSupplyView> {
               ],
             ),
           ),
-          // Selector de cantidad
+
           Row(
             children: [
               _qtyButton(Icons.remove, () {
@@ -231,8 +223,5 @@ class _NewSupplyViewState extends State<NewSupplyView> {
     );
   }
 
-  void _showProductSearch(BuildContext context) {
-    // Aquí abrirías el Modal que diseñamos antes para proveedores
-    // Pero filtrando productos del catálogo global.
-  }
+  void _showProductSearch(BuildContext context) {}
 }

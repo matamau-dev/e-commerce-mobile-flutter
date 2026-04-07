@@ -52,12 +52,8 @@ class ActivityProductsView extends StatelessWidget {
                   imageUrl: product.imageUrl,
                   rating: product.rating,
                   tagLabel: product.tagLabel,
-                  onTap: () {
-                    // Navigate to product detail if needed
-                  },
-                  onAdd: () {
-                    // Add to cart logic
-                  },
+                  onTap: () {},
+                  onAdd: () {},
                 );
               },
             ),

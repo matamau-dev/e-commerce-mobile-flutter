@@ -20,11 +20,10 @@ class CategorySchemaEditorViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ESTA ES LA FUNCIÓN CLAVE: Guarda cualquier cambio en el atributo
   void updateAttribute(CategoryAttribute updatedAttribute, int index) {
     if (index >= 0 && index < _attributes.length) {
       _attributes[index] = updatedAttribute;
-      notifyListeners(); // Esto refresca la UI
+      notifyListeners();
     }
   }
 

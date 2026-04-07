@@ -1,7 +1,5 @@
 class DashboardRepository {
-  // Simulating a data source
   Future<DashboardData> fetchDashboardData() async {
-    // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 800));
 
     return DashboardData(

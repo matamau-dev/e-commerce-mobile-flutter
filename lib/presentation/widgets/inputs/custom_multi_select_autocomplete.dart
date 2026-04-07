@@ -73,7 +73,7 @@ class _CustomMultiSelectAutocompleteState
           onSelected: (String selection) {
             setState(() {
               _selectedItems.add(selection);
-              _fieldController.clear(); // 👈 limpia input correctamente
+              _fieldController.clear();
             });
 
             widget.onChanged(_selectedItems);
@@ -86,7 +86,7 @@ class _CustomMultiSelectAutocompleteState
                 return TextField(
                   controller: fieldController,
                   focusNode: focusNode,
-                  enabled: !_allSelected, // 👈 deshabilita si todo seleccionado
+                  enabled: !_allSelected,
                   decoration: InputDecoration(
                     hintText: _allSelected
                         ? "Todas las opciones seleccionadas"

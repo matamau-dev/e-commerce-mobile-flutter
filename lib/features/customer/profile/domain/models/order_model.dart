@@ -75,7 +75,7 @@ class OrderModel {
   final String trackingNumber;
   final String? firstProductImage;
   final List<OrderItem> items;
-  // In a real app, this would be an AddressModel, but for simplicity we'll use a String for now or just mock it in UI
+
   final String shippingAddress;
 
   const OrderModel({

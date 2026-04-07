@@ -19,7 +19,6 @@ class HomeViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    // Simulate API delay
     Future.delayed(const Duration(milliseconds: 500), () {
       final random = Random();
       final labels = ['NUEVO', 'DESTACADO', 'POPULAR', 'MEJOR VOTADO'];
@@ -47,11 +46,7 @@ class HomeViewModel extends ChangeNotifier {
     context.push("/product", extra: product);
   }
 
-  void onSearchChanged(String value) {
-    // Implement search logic here if needed
-  }
+  void onSearchChanged(String value) {}
 
-  void onNotificationPressed() {
-    // Handle notification press
-  }
+  void onNotificationPressed() {}
 }

@@ -6,7 +6,7 @@ class MenuOption {
   final IconData icon;
   final String? route;
   final Map<String, dynamic>? arguments;
-  final String? id; // For special actions like "logout" or "suggestions"
+  final String? id;
 
   MenuOption({
     required this.title,

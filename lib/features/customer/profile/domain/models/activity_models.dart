@@ -22,7 +22,7 @@ enum CouponStatus { available, used, expired }
 
 class Coupon {
   final String code;
-  final double discount; // Percentage or fixed amount could be handled here
+  final double discount;
   final String description;
   final DateTime expiryDate;
   final CouponStatus status;

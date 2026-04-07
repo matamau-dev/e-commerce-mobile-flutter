@@ -136,9 +136,7 @@ class RegisterView extends StatelessWidget {
                       children: [
                         const Text("¿Ya tienes cuenta?"),
                         TextButton(
-                          onPressed: () {
-                            // context.push('/login');
-                          },
+                          onPressed: () {},
                           child: const Text("Inicia Sesión"),
                         ),
                       ],

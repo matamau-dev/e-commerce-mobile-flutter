@@ -30,13 +30,12 @@ class _StoreViewState extends State<StoreView> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Elegant Sliver App Bar with Search
           SliverAppBar(
             expandedHeight: 120,
             floating: true,
             pinned: true,
             backgroundColor: theme.colorScheme.surface,
-            surfaceTintColor: theme.colorScheme.surface, // Avoid color tint
+            surfaceTintColor: theme.colorScheme.surface,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.only(left: 20, bottom: 16),
               title: Text(
@@ -67,9 +66,7 @@ class _StoreViewState extends State<StoreView> {
                             horizontal: 20,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                              30,
-                            ), // Pill shape for search
+                            borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
                           enabledBorder: OutlineInputBorder(
@@ -111,7 +108,6 @@ class _StoreViewState extends State<StoreView> {
             ),
           ),
 
-          // Filter Chips using SliverToBoxAdapter
           SliverToBoxAdapter(
             child: Container(
               height: 50,
@@ -126,8 +122,7 @@ class _StoreViewState extends State<StoreView> {
                   final isSelected =
                       viewModel.selectedCategory == category ||
                       (viewModel.selectedCategory == 'Sin categoría' &&
-                          category ==
-                              'Todos'); // Handle 'Todos' mapping if needed
+                          category == 'Todos');
 
                   return ChoiceChip(
                     label: Text(category),
@@ -183,13 +178,12 @@ class _StoreViewState extends State<StoreView> {
               ),
             )
           else
-            // Product Grid
             SliverPadding(
               padding: const EdgeInsets.all(16),
               sliver: SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.60, // Adjust card aspect ratio
+                  childAspectRatio: 0.60,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
@@ -201,7 +195,7 @@ class _StoreViewState extends State<StoreView> {
                     imageUrl: product.imageUrl,
                     tagLabel: product.tagLabel,
                     onTap: () => context.push('/product'),
-                    onAdd: () {}, // Could connect to CartViewModel if needed
+                    onAdd: () {},
                   );
                 }, childCount: viewModel.products.length),
               ),

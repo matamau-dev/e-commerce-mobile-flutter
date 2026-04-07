@@ -33,7 +33,7 @@ class DeleteConfirmDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          onPressed: () => Navigator.pop(context, true), // Retornamos "true"
+          onPressed: () => Navigator.pop(context, true),
           child: const Text(
             "Eliminar",
             style: TextStyle(fontWeight: FontWeight.bold),

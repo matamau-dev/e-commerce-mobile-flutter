@@ -20,8 +20,6 @@ class _ProductListViewState extends State<ProductListView> {
   @override
   void initState() {
     super.initState();
-    // Set initial category if needed. ViewModel handle this via constructor/provider creation
-    // but we can enforce it here if we want dynamic updates or just rely on the provider creation in router.
   }
 
   @override
@@ -44,7 +42,7 @@ class _ProductListViewState extends State<ProductListView> {
               onPressed: () {
                 setState(() => _isSearch = !_isSearch);
                 if (!_isSearch) {
-                  viewModel.setSearchQuery(''); // Clear search on close
+                  viewModel.setSearchQuery('');
                 }
               },
             ),
@@ -74,7 +72,6 @@ class _ProductListViewState extends State<ProductListView> {
           children: [
             if (viewModel.isLoading) const LinearProgressIndicator(),
 
-            // Active Filters Chips (Optional - can add later)
             Expanded(
               child: viewModel.products.isEmpty && !viewModel.isLoading
                   ? Center(
@@ -98,8 +95,6 @@ class _ProductListViewState extends State<ProductListView> {
                       isScrollable: true,
                       products: viewModel.products,
                       onProductTap: (product) {
-                        // Decide if we pass object or fetch by ID.
-                        // For now, simple navigation.
                         context.push("/product");
                       },
                     ),

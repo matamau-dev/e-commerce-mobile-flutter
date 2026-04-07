@@ -29,7 +29,6 @@ class _ProductAdminState extends State<ProductAdmin> {
       ),
       body: Column(
         children: [
-          /// FILTROS
           SizedBox(
             height: 50,
             child: ListView.separated(
@@ -56,7 +55,6 @@ class _ProductAdminState extends State<ProductAdmin> {
 
           const SizedBox(height: 10),
 
-          /// LISTA
           if (isList) const Expanded(child: AdminProductList()),
           if (!isList) const Expanded(child: AdminProductGrid()),
         ],

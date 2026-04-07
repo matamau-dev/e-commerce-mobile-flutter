@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LegalView extends StatelessWidget {
   final String title;
-  final String type; // 'terms' or 'privacy'
+  final String type;
 
   const LegalView({super.key, required this.title, required this.type});
 

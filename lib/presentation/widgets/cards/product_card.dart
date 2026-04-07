@@ -1,6 +1,6 @@
 import 'package:e_commerce/presentation/images/custom_network_image.dart';
 import 'package:flutter/material.dart';
-// Asumo que estos existen o son mocks, si no, coméntalos para probar
+
 import '../prices/price_tag.dart';
 import '../feedback/rating_bar.dart';
 import '../feedback/custom_chip.dart';
@@ -36,18 +36,14 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        // Agregamos clip para que la imagen no se salga de los bordes redondeados
         clipBehavior: Clip.antiAlias,
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. IMAGEN (Flex 1)
-            // Usamos Expanded para que ocupe el espacio disponible
             Expanded(
-              flex:
-                  4, // Le bajamos un poco la prioridad a la imagen (4 vs 5 antes)
+              flex: 4,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -70,20 +66,14 @@ class ProductCard extends StatelessWidget {
               ),
             ),
 
-            // 2. DETALLES (Flex más alto o Flexible)
             Expanded(
-              // Cambiado a Expanded para asegurar que llene el resto
               flex: 3,
               child: Padding(
-                padding: const EdgeInsets.all(
-                  10.0,
-                ), // Padding un poco más pequeño
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween, // Clave: empuja precio al fondo
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Título y Rating
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -93,27 +83,23 @@ class ProductCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.titleSmall?.copyWith(
-                            // titleSmall en lugar de Medium para Cards
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 4),
-                        // RatingBar
+
                         if (rating > 0) RatingBar(rating: rating, size: 12),
                       ],
                     ),
 
-                    // Precio y Botón
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Precio con Flexible para evitar overflow horizontal
                         Flexible(
                           child: PriceTag(
                             price: price,
                             originalPrice: originalPrice,
-                            // Asegúrate que PriceTag maneje texto responsive o pequeño
                           ),
                         ),
                         if (actionWidget != null) ...[

@@ -25,34 +25,34 @@ class CategoryView extends StatelessWidget {
                   children: [
                     const CategoryHeader(),
                     const SizedBox(height: 16),
-              AdminSection(
-                items: categoryViewModel.categories,
-                title: "Categorias",
-                onEdit: (name) => _openCategoryDialog(
-                  context,
-                  categoryViewModel,
-                  currentName: name,
-                  isSub: false,
+                    AdminSection(
+                      items: categoryViewModel.categories,
+                      title: "Categorias",
+                      onEdit: (name) => _openCategoryDialog(
+                        context,
+                        categoryViewModel,
+                        currentName: name,
+                        isSub: false,
+                      ),
+                      onDelete: (name) =>
+                          _showDeleteDialog(context, categoryViewModel, name),
+                    ),
+                    const SizedBox(height: 16),
+                    AdminSection(
+                      items: categoryViewModel.subCategories,
+                      title: "Sub Categorias",
+                      onEdit: (name) => _openCategoryDialog(
+                        context,
+                        categoryViewModel,
+                        currentName: name,
+                        isSub: true,
+                      ),
+                      onDelete: (name) =>
+                          _showDeleteDialog(context, categoryViewModel, name),
+                    ),
+                  ],
                 ),
-                onDelete: (name) =>
-                    _showDeleteDialog(context, categoryViewModel, name),
               ),
-              const SizedBox(height: 16),
-              AdminSection(
-                items: categoryViewModel.subCategories,
-                title: "Sub Categorias",
-                onEdit: (name) => _openCategoryDialog(
-                  context,
-                  categoryViewModel,
-                  currentName: name,
-                  isSub: true,
-                ),
-                onDelete: (name) =>
-                    _showDeleteDialog(context, categoryViewModel, name),
-              ),
-            ],
-          ),
-        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push("/new-category"),
@@ -68,9 +68,7 @@ class CategoryView extends StatelessWidget {
       ),
     );
   }
-
 }
-
 
 void _openCategoryDialog(
   BuildContext context,
@@ -96,9 +94,9 @@ void _openCategoryDialog(
       await vm.editCategory(currentName, newName);
     }
     if (context.mounted && vm.errorMessage != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${vm.errorMessage}")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: ${vm.errorMessage}")));
     }
   }
 }
@@ -114,16 +112,15 @@ void _showDeleteDialog(
   );
 
   if (shouldDelete == true) {
-    // Buscamos si es categoría o subcategoría y borramos
     if (vm.categories.contains(itemName)) {
       await vm.deleteCategory(itemName);
     } else {
       await vm.deleteSubCategory(itemName);
     }
     if (context.mounted && vm.errorMessage != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${vm.errorMessage}")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: ${vm.errorMessage}")));
     }
   }
 }
@@ -149,16 +146,16 @@ void _onAddNewEntity(BuildContext context, CategoryViewModel vm) async {
     } else {
       await vm.addCategory(name);
     }
-    
+
     if (context.mounted) {
       if (vm.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error: ${vm.errorMessage}")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Error: ${vm.errorMessage}")));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("$name guardado correctamente")),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("$name guardado correctamente")));
       }
     }
   }

@@ -5,8 +5,6 @@ class UserStatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Logic to determine tier based on points
-    // In a real application, this value would come from a ViewModel or Model
     const int points = 1200;
 
     String badge;
@@ -14,7 +12,7 @@ class UserStatsCard extends StatelessWidget {
 
     if (points < 500) {
       badge = "Bronce";
-      color = const Color(0xFFCD7F32); // Bronze color
+      color = const Color(0xFFCD7F32);
     } else if (points <= 1000) {
       badge = "Plata";
       color = Colors.grey;

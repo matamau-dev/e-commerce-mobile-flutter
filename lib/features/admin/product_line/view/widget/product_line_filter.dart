@@ -22,9 +22,7 @@ class ProductLineFilter extends StatelessWidget {
           return ChoiceChip(
             label: Text(filter),
             selected: isSelected,
-            onSelected: (selected) {
-              // por ahora vacío si no quieres lógica
-            },
+            onSelected: (selected) {},
             selectedColor: theme.colorScheme.primary,
             backgroundColor: theme.colorScheme.surface,
             labelStyle: TextStyle(

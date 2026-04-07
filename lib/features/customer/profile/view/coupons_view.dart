@@ -133,7 +133,7 @@ class _CouponCard extends StatelessWidget {
                 Text(
                   isAvailable
                       ? "Expira: ${coupon.formattedExpiry}"
-                      : "Usado el: ${coupon.formattedExpiry}", // Logic could be adjusted if we had usedDate
+                      : "Usado el: ${coupon.formattedExpiry}",
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colorScheme.outline,
                   ),

@@ -15,7 +15,6 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    // Watch logic so the view rebuilds
     final vm = context.watch<DashboardViewModel>();
     final state = vm.state;
 

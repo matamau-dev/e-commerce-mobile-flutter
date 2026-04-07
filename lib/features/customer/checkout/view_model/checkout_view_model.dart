@@ -26,7 +26,6 @@ class CheckoutViewModel extends ChangeNotifier {
   CardPayment? get selectedPaymentMethod => _selectedPaymentMethod;
   bool get isLoading => _isLoading;
 
-  // Get totals from CartViewModel
   double get subtotal => _cartViewModel.subtotal;
   double get shipping => _cartViewModel.shipping;
   double get tax => _cartViewModel.tax;
@@ -37,21 +36,18 @@ class CheckoutViewModel extends ChangeNotifier {
   }
 
   void _initializeDefaults() {
-    // Attempt to set defaults from other ViewModels
     if (_addressViewModel.addresses.isNotEmpty) {
-      // If we already have a selection, ensure it still exists, otherwise reset
       if (_selectedAddress != null) {
         try {
           _addressViewModel.addresses.firstWhere(
             (a) => a.id == _selectedAddress!.id,
           );
         } catch (_) {
-          _selectedAddress = null; // Selected address was removed
+          _selectedAddress = null;
         }
       }
 
       if (_selectedAddress == null) {
-        // Find default or use first
         try {
           _selectedAddress = _addressViewModel.addresses.firstWhere(
             (a) => a.isDefault,
@@ -65,7 +61,6 @@ class CheckoutViewModel extends ChangeNotifier {
     }
 
     if (_paymentsViewModel.cards.isNotEmpty) {
-      // Similar logic for cards
       if (_selectedPaymentMethod != null) {
         try {
           _paymentsViewModel.cards.firstWhere(
@@ -77,7 +72,6 @@ class CheckoutViewModel extends ChangeNotifier {
       }
 
       if (_selectedPaymentMethod == null) {
-        // Find default or use first
         try {
           _selectedPaymentMethod = _paymentsViewModel.cards.firstWhere(
             (c) => c.active,
@@ -104,17 +98,15 @@ class CheckoutViewModel extends ChangeNotifier {
 
   Future<bool> placeOrder() async {
     if (_selectedAddress == null || _selectedPaymentMethod == null) {
-      return false; // Validation failed
+      return false;
     }
 
     _isLoading = true;
     notifyListeners();
 
-    // Simulate network delay
     await Future.delayed(const Duration(seconds: 2));
 
-    // Success logic
-    _cartViewModel.clearCart(); // Example: clear cart after successful order
+    _cartViewModel.clearCart();
     _isLoading = false;
     notifyListeners();
     return true;

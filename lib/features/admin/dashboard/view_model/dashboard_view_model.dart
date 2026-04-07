@@ -32,13 +32,11 @@ class DashboardViewModel extends ChangeNotifier {
   }
 
   void _updateDashboardWithData(DashboardData data) {
-    // Business Logic for KPIs
     final salesMetric = _createSalesMetric(data.sales);
     final pendingMetric = _createPendingMetric(data.pendingOrders);
     final lowStockMetric = _createLowStockMetric(data.lowStock);
     final usersMetric = _createUsersMetric(data.users);
 
-    // Chart Logic
     final todaySpots = ChartUtils.generateSpots(
       data.todaySales,
       shouldAccumulate: !_state.chart.isHourly,
@@ -59,8 +57,6 @@ class DashboardViewModel extends ChangeNotifier {
       ),
     );
   }
-
-  /* Business Logic for KPI Thresholds */
 
   KpiMetric<double> _createSalesMetric(double sales) {
     KpiStatus status;
@@ -114,30 +110,20 @@ class DashboardViewModel extends ChangeNotifier {
     return KpiMetric(value: users, status: status, formatted: "$users");
   }
 
-  /* Interaction Methods */
-
   void setChartMode(bool isHourly) {
     if (_state.chart.isHourly == isHourly) return;
 
     _state = _state.copyWith(chart: _state.chart.copyWith(isHourly: isHourly));
-    // Re-fetch or re-calculate chart data needed?
-    // Ideally we should keep the raw data in the VM or Repository to re-calculate without re-fetching.
-    // For now, let's just re-init to simulate a refresh or better, store data locally.
-    // Since I didn't store raw data in VM state, I will implement a quick fix:
-    // Ideally this refactor should have stored the raw lists in the VM.
 
-    // Rerunning init is easy but slow.
-    // Let's improve this: Store the last fetched data in the VM.
     _refreshChartWithCurrentData();
     notifyListeners();
   }
 
-  // Stored data for toggling chart mode without network call
   DashboardData? _lastData;
 
   Future<void> _refreshChartWithCurrentData() async {
     if (_lastData == null) {
-      await _init(); // Fallback
+      await _init();
       return;
     }
 
@@ -158,10 +144,8 @@ class DashboardViewModel extends ChangeNotifier {
     );
   }
 
-  // View Actions
   void onViewSales() {
     debugPrint("Navigating to Sales Details...");
-    // navigation logic
   }
 
   void onViewPendingOrders() {

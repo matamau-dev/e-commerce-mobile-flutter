@@ -34,7 +34,6 @@ class ProductListTile extends StatelessWidget {
           height: 120,
           child: Row(
             children: [
-              // 1. IMAGEN
               ClipRRect(
                 borderRadius: const BorderRadius.horizontal(
                   left: Radius.circular(16),
@@ -47,7 +46,6 @@ class ProductListTile extends StatelessWidget {
                 ),
               ),
 
-              // 2. DETALLES
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -57,7 +55,6 @@ class ProductListTile extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // TITULO + PRECIO
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -94,7 +91,6 @@ class ProductListTile extends StatelessWidget {
 
                       const Spacer(),
 
-                      // TAGS
                       if (tags.isNotEmpty)
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -125,7 +121,6 @@ class ProductListTile extends StatelessWidget {
                 ),
               ),
 
-              // 3. ACCIONES / TRAILING
               if (trailing != null)
                 Padding(
                   padding: const EdgeInsets.only(right: 8),

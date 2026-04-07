@@ -2,7 +2,6 @@ import 'package:e_commerce/features/customer/profile/domain/models/activity_mode
 import 'package:flutter/material.dart';
 
 class ActivityViewModel extends ChangeNotifier {
-  // Mock Viewed History
   final List<ActivityProduct> _viewedProducts = [
     ActivityProduct(
       id: "101",
@@ -35,7 +34,6 @@ class ActivityViewModel extends ChangeNotifier {
     ),
   ];
 
-  // Mock Wishlist
   final List<ActivityProduct> _wishlistProducts = [
     ActivityProduct(
       id: "201",
@@ -68,7 +66,6 @@ class ActivityViewModel extends ChangeNotifier {
     return _wishlistProducts.any((p) => p.id == productId);
   }
 
-  // Mock Coupons
   final List<Coupon> _coupons = [
     Coupon(
       code: "WELCOME20",
@@ -86,7 +83,7 @@ class ActivityViewModel extends ChangeNotifier {
     ),
     Coupon(
       code: "FREESHIP",
-      discount: 0.0, // Represents free shipping
+      discount: 0.0,
       description: "Envío gratis en compras mayores a \$50",
       expiryDate: DateTime.now().add(const Duration(days: 7)),
       status: CouponStatus.available,
@@ -112,7 +109,6 @@ class ActivityViewModel extends ChangeNotifier {
 
   List<Coupon> get availableCoupons =>
       _coupons.where((c) => c.status == CouponStatus.available).toList();
-  List<Coupon> get usedCoupons => _coupons
-      .where((c) => c.status == CouponStatus.used)
-      .toList(); // Could also include expired if desired
+  List<Coupon> get usedCoupons =>
+      _coupons.where((c) => c.status == CouponStatus.used).toList();
 }

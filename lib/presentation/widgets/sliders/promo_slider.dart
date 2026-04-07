@@ -18,7 +18,6 @@ class PromoSlider extends StatefulWidget {
 }
 
 class _PromoSliderState extends State<PromoSlider> {
-
   int _currentPage = 0;
 
   @override

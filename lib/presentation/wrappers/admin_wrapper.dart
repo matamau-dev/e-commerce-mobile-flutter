@@ -19,14 +19,12 @@ class _AdminWrapperState extends State<AdminWrapper> {
 
   void _navigateTo(String route) {
     context.go(route);
-    // 2. Usa la llave en lugar de Scaffold.of(context)
+
     if (_scaffoldKey.currentState?.isDrawerOpen ?? false) {
-      _scaffoldKey.currentState
-          ?.closeDrawer(); // Alternativa más directa que Navigator.pop
+      _scaffoldKey.currentState?.closeDrawer();
     }
   }
 
-  // Widget optimizado para sub-ítems
   Widget _subMenuItem(String title, String route) {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 72),
@@ -58,7 +56,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
       drawer: Drawer(
         child: Column(
           children: [
-            // --- SECCIÓN SUPERIOR ---
             UserAccountsDrawerHeader(
               accountName: const Text("Admin Principal"),
               accountEmail: const Text("admin@ecommerce.com"),
@@ -68,7 +65,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
               decoration: BoxDecoration(color: theme.colorScheme.primary),
             ),
 
-            // --- SECCIÓN CENTRAL (SCROLLABLE) ---
             Expanded(
               child: ListView(
                 padding: EdgeInsets.zero,
@@ -80,12 +76,10 @@ class _AdminWrapperState extends State<AdminWrapper> {
                     onTap: () => _navigateTo('/dashboard'),
                   ),
 
-                  // Grupo Catálogo
                   ExpansionTile(
                     leading: const Icon(Icons.inventory_2_outlined),
                     title: const Text("Catálogo"),
                     initiallyExpanded:
-                        // _isActive('/type-product') ||
                         _isActive('/products') ||
                         _isActive('/stocks') ||
                         _isActive('/categories') ||
@@ -93,7 +87,7 @@ class _AdminWrapperState extends State<AdminWrapper> {
                         _isActive("/models"),
                     children: [
                       _subMenuItem('Productos', '/products'),
-                      // _subMenuItem('Tipos de Producto', '/type-product'),
+
                       _subMenuItem('Inventario', '/stocks'),
                       _subMenuItem('Categorías', '/categories'),
                       _subMenuItem('Marcas', '/brands'),
@@ -101,7 +95,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
                     ],
                   ),
 
-                  // Grupo Ventas y Marketing
                   ExpansionTile(
                     leading: const Icon(Icons.point_of_sale),
                     title: const Text("Ventas"),
@@ -116,7 +109,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
                     ],
                   ),
 
-                  // Grupo Operaciones (Proveedores)
                   ExpansionTile(
                     leading: const Icon(Icons.business_outlined),
                     title: const Text("Operaciones"),
@@ -139,7 +131,6 @@ class _AdminWrapperState extends State<AdminWrapper> {
               ),
             ),
 
-            // --- SECCIÓN INFERIOR (FIJA) ---
             const Divider(height: 1),
             ListTile(
               leading: const Icon(Icons.settings_outlined),

@@ -131,7 +131,6 @@ class LoginView extends StatelessWidget {
         message: "Bienvenido!!",
         type: SnackbarType.success,
       );
-      // context.push("/home");
     } else {
       CustomSnackbar.show(
         context,

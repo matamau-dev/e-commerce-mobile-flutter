@@ -8,13 +8,11 @@ class ProductViewModel extends ChangeNotifier {
   final ActivityViewModel _activityViewModel;
   final CartViewModel _cartViewModel;
 
-  // Mock current product details
-  // In a real app, this would be passed via constructor or loaded by ID
   final ActivityProduct _currentProduct = ActivityProduct(
-    id: "101", // ID matches one of the mock items
+    id: "101",
     title: "Samsung Galaxy S24 Ultra",
     price: 1200.00,
-    imageUrl: "https://picsum.photos/id/1/200/300", // Placeholder
+    imageUrl: "https://picsum.photos/id/1/200/300",
     rating: 4.8,
   );
 
@@ -26,10 +24,9 @@ class ProductViewModel extends ChangeNotifier {
 
   void toggleFavorite() {
     _activityViewModel.toggleWishlist(_currentProduct);
-    notifyListeners(); // Notify to rebuild UI (icon change)
+    notifyListeners();
   }
 
-  // Mock reviews
   final List<Review> _reviews = [
     Review(
       id: "1",
@@ -56,7 +53,7 @@ class ProductViewModel extends ChangeNotifier {
 
     final newReview = Review(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      userName: "Usuario Actual", // In a real app, get from AuthService
+      userName: "Usuario Actual",
       userId: "current_user",
       rating: rating,
       comment: comment,

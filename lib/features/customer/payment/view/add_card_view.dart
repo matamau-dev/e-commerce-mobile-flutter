@@ -34,7 +34,7 @@ class _AddCardViewState extends State<AddCardView> {
       _numberController.text = card.hiddenNumber;
       _nameController.text = card.cardHolderName;
       _expiryController.text = card.expirationDate;
-      _cvvController.text = "***"; // Mock CVV
+      _cvvController.text = "***";
     }
   }
 
@@ -49,7 +49,6 @@ class _AddCardViewState extends State<AddCardView> {
 
   void _saveCard() {
     if (_formKey.currentState!.validate()) {
-      // Simple parse logic for demo
       final expiry = _expiryController.text.split('/');
       final month = expiry.isNotEmpty ? expiry[0] : "00";
       final year = expiry.length > 1 ? expiry[1] : "00";
@@ -67,7 +66,6 @@ class _AddCardViewState extends State<AddCardView> {
             ? number.substring(number.length - 4)
             : "0000";
 
-        // Detect brand (simple mock logic)
         Brand brand = Brand.other;
         if (number.startsWith('4'))
           brand = Brand.visa;

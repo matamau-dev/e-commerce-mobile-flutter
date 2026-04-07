@@ -25,25 +25,21 @@ class CheckoutView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Step 1: Shipping Address
                   _buildSectionHeader(context, "1", "Dirección de Envío"),
                   const SizedBox(height: 12),
                   _buildAddressCard(context, viewModel),
                   const SizedBox(height: 24),
 
-                  // Step 2: Payment Method
                   _buildSectionHeader(context, "2", "Método de Pago"),
                   const SizedBox(height: 12),
                   _buildPaymentCard(context, viewModel),
                   const SizedBox(height: 24),
 
-                  // Step 3: Order Summary
                   _buildSectionHeader(context, "3", "Resumen del Pedido"),
                   const SizedBox(height: 12),
                   _buildOrderSummary(context, viewModel),
                   const SizedBox(height: 32),
 
-                  // Action Button
                   CustomButton(
                     text:
                         "Confirmar y Pagar \$${viewModel.total.toStringAsFixed(2)}",
@@ -56,7 +52,7 @@ class CheckoutView extends StatelessWidget {
                             backgroundColor: Colors.green,
                           ),
                         );
-                        context.go('/'); // Navigate home or to orders
+                        context.go('/');
                       } else if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -112,7 +108,6 @@ class CheckoutView extends StatelessWidget {
   Widget _buildAddressCard(BuildContext context, CheckoutViewModel viewModel) {
     final address = viewModel.selectedAddress;
 
-    // If no address selected, show add button or empty state
     if (address == null) {
       return InkWell(
         onTap: () {
@@ -133,7 +128,6 @@ class CheckoutView extends StatelessWidget {
               color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
             ),
             borderRadius: BorderRadius.circular(12),
-            // borderStyle: BorderStyle.dashed is not valid on Border.all, use custom decoration or image for dashed
           ),
           child: Column(
             children: [
@@ -222,7 +216,6 @@ class CheckoutView extends StatelessWidget {
               color: Theme.of(context).colorScheme.outline.withOpacity(0.5),
             ),
             borderRadius: BorderRadius.circular(12),
-            // dashed border omitted for standard border
           ),
           child: Column(
             children: [

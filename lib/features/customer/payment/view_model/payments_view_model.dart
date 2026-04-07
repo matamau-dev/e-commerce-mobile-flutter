@@ -3,7 +3,6 @@ import 'package:e_commerce/features/customer/payment/model/card_payment.dart';
 import 'package:flutter/material.dart';
 
 class PaymentsViewModel extends ChangeNotifier {
-  // Mock Initial Data
   List<CardPayment> _cards = [
     const CardPayment(
       id: "1",
@@ -31,7 +30,7 @@ class PaymentsViewModel extends ChangeNotifier {
     if (newCard.active) {
       _setAllInactive();
     }
-    // If it's the first card, make it active by default
+
     if (_cards.isEmpty) {
       _cards.add(newCard.copyWith(active: true));
     } else {
@@ -42,7 +41,7 @@ class PaymentsViewModel extends ChangeNotifier {
 
   void removeCard(String id) {
     _cards.removeWhere((card) => card.id == id);
-    // If we removed the active card and there are others, make the first one active
+
     if (_cards.isNotEmpty && !_cards.any((c) => c.active)) {
       _cards[0] = _cards[0].copyWith(active: true);
     }

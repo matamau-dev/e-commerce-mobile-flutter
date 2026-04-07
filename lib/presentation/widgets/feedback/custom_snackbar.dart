@@ -10,7 +10,6 @@ class CustomSnackbar {
   }) {
     final colors = Theme.of(context).colorScheme;
 
-    // Definimos el color y el icono según el tipo
     Color backgroundColor;
     IconData icon;
 
@@ -36,8 +35,7 @@ class CustomSnackbar {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 3),
-        backgroundColor: Colors
-            .transparent, // Hacemos el fondo transparente para usar nuestro diseño
+        backgroundColor: Colors.transparent,
         elevation: 0,
         content: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

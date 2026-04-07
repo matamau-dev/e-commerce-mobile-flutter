@@ -10,16 +10,13 @@ enum Brand {
     if (cardNumber.isEmpty) return Brand.other;
     final number = cardNumber.replaceAll(RegExp(r'\s+\b|\b\s'), '');
 
-
     if (RegExp(r'^4').hasMatch(number)) {
       return Brand.visa;
     }
 
-
     if (RegExp(r'^5[1-5]').hasMatch(number) || _isInRange(number, 2221, 2720)) {
       return Brand.mastercard;
     }
-
 
     if (RegExp(r'^3[47]').hasMatch(number)) {
       return Brand.amex;

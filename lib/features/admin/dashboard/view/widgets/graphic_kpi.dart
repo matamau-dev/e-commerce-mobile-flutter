@@ -8,9 +8,6 @@ class GraphicKpi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Ideally we should pass the callback down or use a specific selector causing rebuild only on chart changes.
-    // However, since this widget is tightly coupled to VM logic for chart toggling, we keep VM access but cleaner.
-
     final vm = context.read<DashboardViewModel>();
     final chartState = context.select(
       (DashboardViewModel vm) => vm.state.chart,
@@ -41,8 +38,6 @@ class GraphicKpi extends StatelessWidget {
     );
   }
 }
-
-// --- Componentes privados para no ensuciar el build principal ---
 
 class _Header extends StatelessWidget {
   final VoidCallback onTap;
@@ -136,7 +131,6 @@ class _ChartCanvas extends StatelessWidget {
       );
 
   FlTitlesData _buildTitles() => FlTitlesData(
-    // Aquí pones la lógica de los ejes que ya teníamos (value % 6 == 0, etc.)
     show: true,
     topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
     rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),

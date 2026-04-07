@@ -18,9 +18,8 @@ class AppTheme {
       colorScheme: colorScheme,
       brightness: colorScheme.brightness,
       scaffoldBackgroundColor: colorScheme.background,
-      fontFamily:
-          'Roboto', // Default, but explicit for clarity if we add fonts later
-      // Enhanced Typography
+      fontFamily: 'Roboto',
+
       textTheme: TextTheme(
         displayLarge: TextStyle(
           fontSize: 57,
@@ -42,7 +41,7 @@ class AppTheme {
         ),
         headlineLarge: TextStyle(
           fontSize: 32,
-          fontWeight: FontWeight.w600, // Slightly bolder for headlines
+          fontWeight: FontWeight.w600,
           color: colorScheme.onSurface,
           letterSpacing: 0,
         ),
@@ -66,7 +65,7 @@ class AppTheme {
         ),
         titleMedium: TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.w600, // Medium weight for subtitles
+          fontWeight: FontWeight.w600,
           letterSpacing: 0.15,
           color: colorScheme.onSurface,
         ),
@@ -80,7 +79,7 @@ class AppTheme {
           fontSize: 16,
           fontWeight: FontWeight.w400,
           letterSpacing: 0.5,
-          color: colorScheme.onSurface.withOpacity(0.87), // Soften body text
+          color: colorScheme.onSurface.withOpacity(0.87),
         ),
         bodyMedium: TextStyle(
           fontSize: 14,
@@ -96,7 +95,7 @@ class AppTheme {
         ),
         labelLarge: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w600, // Prominent labels
+          fontWeight: FontWeight.w600,
           letterSpacing: 0.1,
           color: colorScheme.onSurface,
         ),
@@ -114,13 +113,12 @@ class AppTheme {
         ),
       ),
 
-      // Clean, modern AppBar
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.surface,
-        foregroundColor: colorScheme.onSurface, // Dark text on light background
+        foregroundColor: colorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
-        scrolledUnderElevation: 0, // No color change on scroll
+        scrolledUnderElevation: 0,
         iconTheme: IconThemeData(color: colorScheme.onSurface),
         titleTextStyle: TextStyle(
           color: colorScheme.onSurface,
@@ -130,7 +128,6 @@ class AppTheme {
         ),
       ),
 
-      // Modern Button Styling
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
@@ -141,13 +138,10 @@ class AppTheme {
             letterSpacing: 0.5,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16), // Softer corners
+            borderRadius: BorderRadius.circular(16),
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 16,
-          ), // Larger touch target
-          elevation: 0, // Flat design
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          elevation: 0,
           shadowColor: Colors.transparent,
         ),
       ),
@@ -201,10 +195,9 @@ class AppTheme {
         ),
       ),
 
-      // Clean Inputs
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surfaceVariant.withOpacity(0.3), // Lighter fill
+        fillColor: colorScheme.surfaceVariant.withOpacity(0.3),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
@@ -233,19 +226,18 @@ class AppTheme {
         suffixIconColor: colorScheme.onSurfaceVariant,
       ),
 
-      // Modern Cards
       cardTheme: CardThemeData(
         color: colorScheme.surface,
-        elevation: 0, // Flat
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
             color: colorScheme.outline.withOpacity(0.08),
             width: 1,
-          ), // Subtle border
+          ),
         ),
         margin: EdgeInsets.zero,
-        clipBehavior: Clip.antiAlias, // Clean edges for children
+        clipBehavior: Clip.antiAlias,
       ),
 
       iconTheme: IconThemeData(color: colorScheme.onSurface, size: 24),
@@ -271,7 +263,7 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        elevation: 8, // Subtle shadow for tab bar
+        elevation: 8,
         selectedLabelStyle: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
