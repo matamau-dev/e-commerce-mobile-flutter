@@ -13,7 +13,7 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final registerViewModel = Provider.of<RegisterViewModel>(context);
+    final registerViewModel = context.read<RegisterViewModel>();
 
     return Scaffold(
       appBar: const CustomAppBar(title: "Crear Cuenta"),
@@ -50,20 +50,6 @@ class RegisterView extends StatelessWidget {
                       onSubmitted: (_) {
                         registerViewModel.nameFocusNode.unfocus();
                         registerViewModel.usernameFocusNode.requestFocus();
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    CustomTextFormField(
-                      label: "Usuario",
-                      hint: "Ej. juanperez",
-                      keyboardType: TextInputType.name,
-                      prefixIcon: Icons.person_outline,
-                      controller: registerViewModel.usernameController,
-                      validator: registerViewModel.validateUsername,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (_) {
-                        registerViewModel.usernameFocusNode.unfocus();
-                        registerViewModel.emailFocusNode.requestFocus();
                       },
                     ),
 
@@ -123,28 +109,7 @@ class RegisterView extends StatelessWidget {
                       focusNode: registerViewModel.confirmPasswordFocusNode,
                       onSubmitted: (_) async {
                         registerViewModel.confirmPasswordFocusNode.unfocus();
-                        try {
-                          await registerViewModel.onFormSubmit();
-                          if (context.mounted) {
-                            CustomSnackbar.show(
-                              context,
-                              message: 'Usuario registrado exitosamente',
-                              type: SnackbarType.success,
-                            );
-                            // context.push('/login');
-                          }
-                        } catch (e) {
-                          if (context.mounted) {
-                            CustomSnackbar.show(
-                              context,
-                              message: e.toString().replaceAll(
-                                'Exception: ',
-                                '',
-                              ),
-                              type: SnackbarType.error,
-                            );
-                          }
-                        }
+                        await _handleSubmit(context, registerViewModel);
                       },
                     ),
 
@@ -157,34 +122,10 @@ class RegisterView extends StatelessWidget {
                             : "Registrarse",
                         icon: Icons.arrow_forward,
                         isIconRight: true,
-                        onPressed: registerViewModel.isLoading || !registerViewModel.isFormValid
+                        onPressed: registerViewModel.isLoading
                             ? null
-                            : () async {
-                                try {
-                                  await registerViewModel.onFormSubmit();
-                                  if (context.mounted) {
-                                    CustomSnackbar.show(
-                                      context,
-                                      message:
-                                          'Usuario registrado exitosamente',
-                                      type: SnackbarType.success,
-                                    );
-                                    // context.push('/login');
-                                  }
-                                } catch (e) {
-                                  if (context.mounted) {
-                                    debugPrint(e.toString());
-                                    CustomSnackbar.show(
-                                      context,
-                                      message: e.toString().replaceAll(
-                                        'Exception: ',
-                                        '',
-                                      ),
-                                      type: SnackbarType.error,
-                                    );
-                                  }
-                                }
-                              },
+                            : () async =>
+                                  _handleSubmit(context, registerViewModel),
                       ),
                     ),
 
@@ -212,5 +153,30 @@ class RegisterView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _handleSubmit(
+    BuildContext context,
+    RegisterViewModel registerViewModel,
+  ) async {
+    final result = await registerViewModel.onFormSubmit();
+
+    if (!context.mounted) return;
+
+    if (result.success) {
+      CustomSnackbar.show(
+        context,
+        message: "¡Registro completado! Bienvenido.",
+        type: SnackbarType.success,
+      );
+
+      context.push('/login');
+    } else {
+      CustomSnackbar.show(
+        context,
+        message: result.error ?? "Error desconocido",
+        type: SnackbarType.error,
+      );
+    }
   }
 }

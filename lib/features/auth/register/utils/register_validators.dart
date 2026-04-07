@@ -15,18 +15,15 @@ mixin RegisterValidators {
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) return 'Contraseña requerida';
-    if (value.length < 8) return 'La contraseña debe tener al menos 8 caracteres';
+    if (value.length < 8)
+      return 'La contraseña debe tener al menos 8 caracteres';
     return null;
   }
 
   String? validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) return 'Confirmar contraseña requerida';
-    if (value != confirmPasswordMatchText) return 'Las contraseñas no coinciden';
-    return null;
-  }
-
-  String? validateUsername(String? value) {
-    if (value == null || value.isEmpty) return 'Usuario requerido';
+    if (value != confirmPasswordMatchText)
+      return 'Las contraseñas no coinciden';
     return null;
   }
 

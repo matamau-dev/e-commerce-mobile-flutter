@@ -2,28 +2,20 @@ import 'package:e_commerce/features/auth/register/data/models/register_model.dar
 import 'package:e_commerce/features/auth/register/data/service/register_service.dart';
 import 'package:e_commerce/features/auth/register/domain/entities/user_registration.dart';
 import 'package:e_commerce/features/auth/register/utils/register_validators.dart';
+import 'package:e_commerce/features/exceptions/api_exception.dart';
+import 'package:e_commerce/features/models/process_result.dart';
 import 'package:flutter/material.dart';
 
 class RegisterViewModel extends ChangeNotifier with RegisterValidators {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegisterService _registerService = RegisterService();
 
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-
-  RegisterViewModel() {
-    nameController.addListener(notifyListeners);
-    usernameController.addListener(notifyListeners);
-    emailController.addListener(notifyListeners);
-    phoneController.addListener(notifyListeners);
-    passwordController.addListener(notifyListeners);
-    confirmPasswordController.addListener(notifyListeners);
-  }
 
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode usernameFocusNode = FocusNode();
@@ -32,10 +24,15 @@ class RegisterViewModel extends ChangeNotifier with RegisterValidators {
   final FocusNode passwordFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  @override
+  String get confirmPasswordMatchText => passwordController.text;
+
   @override
   void dispose() {
     nameController.dispose();
-    usernameController.dispose();
     emailController.dispose();
     phoneController.dispose();
     passwordController.dispose();
@@ -47,57 +44,38 @@ class RegisterViewModel extends ChangeNotifier with RegisterValidators {
     phoneFocusNode.dispose();
     passwordFocusNode.dispose();
     confirmPasswordFocusNode.dispose();
+
     super.dispose();
   }
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  Future<ProcessResult> onFormSubmit() async {
+    final form = formKey.currentState;
 
-  bool get isFormValid {
-    return nameController.text.isNotEmpty &&
-        usernameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        phoneController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        confirmPasswordController.text.isNotEmpty &&
-        validateName(nameController.text) == null &&
-        validateUsername(usernameController.text) == null &&
-        validateEmail(emailController.text) == null &&
-        validatePhone(phoneController.text) == null &&
-        validatePassword(passwordController.text) == null &&
-        validateConfirmPassword(confirmPasswordController.text) == null;
-  }
-
-  @override
-  String get confirmPasswordMatchText => passwordController.text;
-
-  final bool _isPasswordVisible = false;
-  bool get isPasswordVisible => _isPasswordVisible;
-
-  final bool _isConfirmPasswordVisible = false;
-  bool get isConfirmPasswordVisible => _isConfirmPasswordVisible;
-
-  // Validaciones movidas al mixin RegisterValidators
-
-  Future<void> onFormSubmit() async {
-    if (!formKey.currentState!.validate()) {
-      return;
+    if (form == null || !form.validate()) {
+      return ProcessResult.failure("Por favor, revisa los campos marcados.");
     }
-    
+
     final entity = UserRegistration(
-      fullName: nameController.text,
-      username: usernameController.text,
-      email: emailController.text,
-      phone: phoneController.text,
+      fullName: nameController.text.trim(),
+      email: emailController.text.trim(),
+      phone: phoneController.text.trim(),
       password: passwordController.text,
     );
-    
+
     _isLoading = true;
     notifyListeners();
 
     try {
       final registerData = RegisterModel.fromEntity(entity);
       await _registerService.postRegister(registerData.toJson());
+      return ProcessResult.ok();
+    } on ApiException catch (e) {
+      return ProcessResult.failure(e.message);
+    } catch (e) {
+      debugPrint("Error en ViewModel: $e");
+      return ProcessResult.failure(
+        "Ocurrió un error inesperado en el sistema.",
+      );
     } finally {
       _isLoading = false;
       notifyListeners();

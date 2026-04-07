@@ -2,6 +2,7 @@ import 'package:e_commerce/features/auth/login/view_model/login_view_model.dart'
 import 'package:e_commerce/presentation/widgets/app_bars/custom_app_bar.dart';
 import 'package:e_commerce/presentation/widgets/buttons/button_type.dart';
 import 'package:e_commerce/presentation/widgets/buttons/custom_button.dart';
+import 'package:e_commerce/presentation/widgets/feedback/custom_snackbar.dart';
 import 'package:e_commerce/presentation/widgets/inputs/custom_text_form_field.dart';
 import 'package:e_commerce/presentation/widgets/inputs/password_input.dart';
 import 'package:flutter/material.dart';
@@ -60,10 +61,7 @@ class LoginView extends StatelessWidget {
                       focusNode: loginViewModel.passwordFocusNode,
                       onSubmitted: (_) async {
                         loginViewModel.passwordFocusNode.unfocus();
-                        final success = await loginViewModel.onFormSubmit();
-                        if (success && context.mounted) {
-                          context.push("/home");
-                        }
+                        await _handleSubmit(context, loginViewModel);
                       },
                     ),
 
@@ -74,12 +72,8 @@ class LoginView extends StatelessWidget {
                         text: loginViewModel.isLoading
                             ? "Espere..."
                             : "Iniciar Sesión",
-                        onPressed: () async {
-                          final success = await loginViewModel.onFormSubmit();
-                          if (success && context.mounted) {
-                            context.push("/home");
-                          }
-                        },
+                        onPressed: () async =>
+                            _handleSubmit(context, loginViewModel),
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -89,11 +83,8 @@ class LoginView extends StatelessWidget {
                         text: loginViewModel.isLoading
                             ? "Espere..."
                             : "Login admin",
-                        onPressed: () async {
-                          final success = await loginViewModel.onFormSubmit();
-                          if (success && context.mounted) {
-                            context.push("/dashboard");
-                          }
+                        onPressed: () {
+                          context.push("/dashboard");
                         },
                       ),
                     ),
@@ -124,5 +115,29 @@ class LoginView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _handleSubmit(
+    BuildContext context,
+    LoginViewModel loginViewModel,
+  ) async {
+    final result = await loginViewModel.onFormSubmit();
+
+    if (!context.mounted) return;
+
+    if (result.success) {
+      CustomSnackbar.show(
+        context,
+        message: "Bienvenido!!",
+        type: SnackbarType.success,
+      );
+      // context.push("/home");
+    } else {
+      CustomSnackbar.show(
+        context,
+        message: result.error ?? "Error desconocido",
+        type: SnackbarType.error,
+      );
+    }
   }
 }
