@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/customer/profile/domain/models/profile_models.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/profile_models.dart';
 import 'package:e_commerce/presentation/widgets/buttons/button_type.dart';
 import 'package:e_commerce/presentation/widgets/buttons/custom_button.dart';
 import 'package:flutter/material.dart';

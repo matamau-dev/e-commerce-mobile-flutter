@@ -1,5 +1,7 @@
+import 'package:e_commerce/features/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class MainWrapper extends StatefulWidget {
   final Widget child;
@@ -14,6 +16,10 @@ class _MainWrapperState extends State<MainWrapper> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
+    if (index == 4) {
+      _showLogoutDialog();
+      return;
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -50,6 +56,30 @@ class _MainWrapperState extends State<MainWrapper> {
     } else if (location.startsWith('/login')) {
       _selectedIndex = 4;
     }
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Cerrar Sesión'),
+        content: const Text('¿Estás seguro de que quieres salir?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+
+              context.read<AuthProvider>().logout();
+            },
+            child: const Text('Salir', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

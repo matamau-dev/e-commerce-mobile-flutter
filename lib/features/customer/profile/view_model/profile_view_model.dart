@@ -1,162 +1,56 @@
-import 'package:e_commerce/features/customer/profile/domain/models/order_model.dart';
-import 'package:e_commerce/features/customer/profile/domain/models/profile_models.dart';
-import 'package:e_commerce/features/customer/profile/domain/models/user_model.dart';
-import 'package:e_commerce/features/customer/profile/view_model/activity_view_model.dart';
-import 'package:e_commerce/features/customer/profile/widget/suggestion_bottom_sheet.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/service/user_service.dart';
+import 'package:e_commerce/features/customer/profile/domain/entities/user_entity.dart';
+import 'package:e_commerce/features/customer/profile/domain/profile_action_enum.dart';
+import 'package:e_commerce/features/customer/profile/view/profile_menu_config.dart';
+import 'package:e_commerce/features/exceptions/api_exception.dart';
+import 'package:e_commerce/features/models/process_result.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/profile_models.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/user_model.dart';
+import 'package:e_commerce/features/customer/profile/view_model/activity_view_model.dart';
+import 'package:e_commerce/features/customer/profile/widget/suggestion_bottom_sheet.dart';
 
 class ProfileViewModel extends ChangeNotifier {
-  UserModel _user = const UserModel(
-    id: "u1",
-    name: "Mauricio Mátuz",
-    email: "example@gmail.com",
-    phone: "+52 55 1234 5678",
-    imageUrl: "https://i.pravatar.cc/300",
-  );
+  final UserService _userService = UserService();
 
-  UserModel get user => _user;
+  UserModel? _user;
+  bool _isLoading = false;
+  String? _errorMessage;
 
-  void updateUser(String name, String email, String phone) {
-    _user = _user.copyWith(name: name, email: email, phone: phone);
+  UserModel? get user => _user;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+  List<ProfileSection> get sections => ProfileMenuConfig.getSections();
+
+  Future<ProcessResult> loadUserProfile() async {
+    _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
+
+    try {
+      final data = await _userService.getUserProfile();
+      print('DATA $data');
+      final userEntity = UserEntity(
+        id: data['id'],
+        name: data['name'],
+        email: data['email'],
+        phone: data['phone'],
+        imageUrl: data['imageUrl'] ?? 'https://i.pravatar.cc/300',
+      );
+
+      _user = UserModel.fromEntity(userEntity);
+      return ProcessResult.ok();
+    } on ApiException catch (e) {
+      return ProcessResult.failure(e.message);
+    } catch (e) {
+      return ProcessResult.failure('Ocurrió un error inesperado');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
-
-  void updateProfileImage() {
-    final newImage = _user.imageUrl.contains("300")
-        ? "https://i.pravatar.cc/301"
-        : "https://i.pravatar.cc/300";
-
-    _user = _user.copyWith(imageUrl: newImage);
-    notifyListeners();
-  }
-
-  List<ProfileSection> get sections => [
-    ProfileSection(
-      title: "Mis pedidos",
-      actionLabel: "Ver todos",
-      actionId: "view_all_orders",
-      options: [
-        MenuOption(
-          title: "Pendientes de",
-          subtitle: "pago",
-          icon: Icons.money,
-          route: '/orders',
-          arguments: {
-            'title': "Pendientes de pago",
-            'filterStatuses': [OrderStatus.pending],
-          },
-        ),
-        MenuOption(
-          title: "Pendientes de",
-          subtitle: "entrega",
-          icon: Icons.holiday_village_outlined,
-          route: '/orders',
-          arguments: {
-            'title': "Pendientes de entrega",
-            'filterStatuses': [
-              OrderStatus.paid,
-              OrderStatus.processing,
-              OrderStatus.shipped,
-            ],
-          },
-        ),
-        MenuOption(
-          title: "Enviados",
-          subtitle: "",
-          icon: Icons.local_shipping_outlined,
-          route: '/orders',
-          arguments: {
-            'title': "Enviados",
-            'filterStatuses': [OrderStatus.shipped],
-          },
-        ),
-        MenuOption(
-          title: "Añadir reseña",
-          subtitle: "",
-          icon: Icons.chat_bubble_outline,
-          route: '/orders',
-          arguments: {
-            'title': "Historial (Añadir Reseña)",
-            'filterStatuses': [OrderStatus.delivered],
-          },
-        ),
-        MenuOption(
-          title: "Devoluciones",
-          subtitle: "",
-          icon: Icons.reply,
-          route: '/orders',
-          arguments: {
-            'title': "Devoluciones y Cancelaciones",
-            'filterStatuses': [OrderStatus.cancelled, OrderStatus.returned],
-          },
-        ),
-      ],
-    ),
-
-    ProfileSection(
-      title: "Mi Actividad",
-      options: [
-        MenuOption(
-          title: "Historial",
-          subtitle: "vistos",
-          icon: Icons.history,
-          id: 'history_viewed',
-        ),
-        MenuOption(
-          title: "Deseos",
-          subtitle: "guardados",
-          icon: Icons.favorite_border,
-          id: 'wishlist',
-        ),
-        MenuOption(
-          title: "Cupones",
-          subtitle: "",
-          icon: Icons.card_giftcard,
-          id: 'coupons',
-        ),
-      ],
-    ),
-
-    ProfileSection(
-      title: "Ayuda y Legal",
-      options: [
-        MenuOption(
-          title: "Ayuda",
-          subtitle: "",
-          icon: Icons.help_outline,
-          route: '/help',
-        ),
-        MenuOption(
-          title: "Términos",
-          subtitle: "",
-          icon: Icons.info_outline,
-          route: '/legal',
-          arguments: {'title': "Términos y Condiciones", 'type': "terms"},
-        ),
-        MenuOption(
-          title: "Privacidad",
-          subtitle: "",
-          icon: Icons.lock_outline,
-          route: '/legal',
-          arguments: {'title': "Política de Privacidad", 'type': "privacy"},
-        ),
-        MenuOption(
-          title: "Sugerencias",
-          subtitle: "",
-          icon: Icons.chat_bubble_outline,
-          id: 'suggestions',
-        ),
-        MenuOption(
-          title: "Preguntas frecuentes",
-          subtitle: "",
-          icon: Icons.question_answer_outlined,
-          route: '/help',
-        ),
-      ],
-    ),
-  ];
 
   void onOptionSelected(BuildContext context, MenuOption option) {
     if (option.route != null) {
@@ -164,41 +58,37 @@ class ProfileViewModel extends ChangeNotifier {
       return;
     }
 
-    if (option.id != null) {
-      switch (option.id) {
-        case 'suggestions':
-          showSuggestionBottomSheet(context);
-          break;
-        case 'history_viewed':
-          final activityViewModel = context.read<ActivityViewModel>();
-          context.push(
-            '/activity_products',
-            extra: {
-              'title': "Historial de Vistos",
-              'products': activityViewModel.viewedProducts,
-            },
-          );
-          break;
-        case 'wishlist':
-          final activityViewModel = context.read<ActivityViewModel>();
-          context.push(
-            '/activity_products',
-            extra: {
-              'title': "Mi Lista de Deseos",
-              'products': activityViewModel.wishlistProducts,
-            },
-          );
-          break;
-        case 'coupons':
-          context.push('/coupons');
-          break;
-      }
+    if (option.id is ProfileOptionId) {
+      _executeSpecialAction(context, option.id as ProfileOptionId);
     }
   }
 
-  void onSectionActionSelected(BuildContext context, ProfileSection section) {
-    if (section.actionId == 'view_all_orders') {
-      debugPrint("Ver todos los pedidos");
-    }
+  void _executeSpecialAction(BuildContext context, ProfileOptionId actionId) {
+    final activityVM = context.read<ActivityViewModel>();
+
+    final Map<ProfileOptionId, VoidCallback> actions = {
+      ProfileOptionId.suggestions: () => _showSuggestions(context),
+      ProfileOptionId.coupons: () => context.push('/coupons'),
+      ProfileOptionId.historyViewed: () =>
+          _navToActivity(context, "Historial", activityVM.viewedProducts),
+      ProfileOptionId.wishlist: () => _navToActivity(
+        context,
+        "Mi Lista de Deseos",
+        activityVM.wishlistProducts,
+      ),
+    };
+
+    actions[actionId]?.call();
+  }
+
+  void _navToActivity(BuildContext context, String title, List products) {
+    context.push(
+      '/activity_products',
+      extra: {'title': title, 'products': products},
+    );
+  }
+
+  void _showSuggestions(BuildContext context) {
+    showSuggestionBottomSheet(context);
   }
 }

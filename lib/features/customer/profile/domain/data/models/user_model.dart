@@ -1,3 +1,5 @@
+import 'package:e_commerce/features/customer/profile/domain/entities/user_entity.dart';
+
 class UserModel {
   final String id;
   final String name;
@@ -12,6 +14,30 @@ class UserModel {
     required this.phone,
     required this.imageUrl,
   });
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "email": email,
+    "phone": phone,
+    "imageUrl": imageUrl,
+  };
+
+  factory UserModel.fromEntity(UserEntity entity) => UserModel(
+    id: entity.id,
+    name: entity.name,
+    email: entity.email,
+    phone: entity.phone,
+    imageUrl: entity.imageUrl,
+  );
+
+  UserEntity toEntity() => UserEntity(
+    id: id,
+    name: name,
+    email: email,
+    phone: phone,
+    imageUrl: imageUrl,
+  );
 
   UserModel copyWith({
     String? name,

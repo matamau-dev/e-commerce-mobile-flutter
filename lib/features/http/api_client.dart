@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:e_commerce/features/http/auth_interceptor.dart';
+import 'package:e_commerce/features/providers/auth_provider.dart';
 
 class ApiClient {
   static final Dio dio = Dio(
@@ -12,4 +14,9 @@ class ApiClient {
       },
     ),
   );
+
+  static void init(AuthProvider authProvider) {
+    dio.interceptors.add(AuthInterceptor(dio, authProvider));
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+  }
 }

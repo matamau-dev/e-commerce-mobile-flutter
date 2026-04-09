@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/customer/profile/domain/models/order_model.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/order_model.dart';
 import 'package:e_commerce/presentation/widgets/app_bars/custom_app_bar.dart';
 
 import 'package:e_commerce/presentation/images/custom_network_image.dart';

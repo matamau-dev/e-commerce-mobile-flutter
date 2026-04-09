@@ -3,6 +3,7 @@ import 'package:e_commerce/features/customer/profile/widget/profile_section_card
 import 'package:e_commerce/features/customer/profile/widget/user_header_section.dart';
 import 'package:e_commerce/features/customer/profile/widget/user_stats_card.dart';
 import 'package:e_commerce/presentation/widgets/app_bars/custom_app_bar.dart';
+import 'package:e_commerce/presentation/widgets/feedback/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,14 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProfileViewModel>().loadUserProfile();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ProfileViewModel>();
@@ -32,34 +41,36 @@ class _ProfileViewState extends State<ProfileView> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
+        child: viewModel.isLoading
+            ? const CustomLoader(message: "Cargando perfil...")
+            : SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 24),
 
-              const UserHeaderSection(),
+                    if (viewModel.user != null)
+                      UserHeaderSection(user: viewModel.user!),
 
-              const SizedBox(height: 32),
+                    const SizedBox(height: 32),
 
-              const UserStatsCard(),
+                    const UserStatsCard(),
 
-              const SizedBox(height: 32),
+                    const SizedBox(height: 32),
 
-              ...viewModel.sections.map((section) {
-                return ProfileSectionCard(
-                  section: section,
-                  onOptionTap: (option) =>
-                      viewModel.onOptionSelected(context, option),
-                  onActionTap: (section) =>
-                      viewModel.onSectionActionSelected(context, section),
-                );
-              }),
+                    ...viewModel.sections.map((section) {
+                      return ProfileSectionCard(
+                        section: section,
+                        onOptionTap: (option) =>
+                            viewModel.onOptionSelected(context, option),
+                        onActionTap: (section) => print("XD"),
+                      );
+                    }),
 
-              const SizedBox(height: 30),
-            ],
-          ),
-        ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
       ),
     );
   }

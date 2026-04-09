@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/customer/profile/domain/models/activity_models.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/activity_models.dart';
 import 'package:e_commerce/features/customer/profile/view_model/activity_view_model.dart';
 import 'package:e_commerce/presentation/widgets/app_bars/custom_app_bar.dart';
 import 'package:flutter/material.dart';

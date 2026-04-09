@@ -1,19 +1,23 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
-
 import 'package:e_commerce/features/auth/login/data/model/login_model.dart';
 import 'package:e_commerce/features/auth/login/data/service/login_service.dart';
 import 'package:e_commerce/features/auth/login/domain/entities/login_entity.dart';
-import 'package:e_commerce/features/auth/login/domain/valueObject/login_email.dart';
 import 'package:e_commerce/features/auth/login/domain/valueObject/login_password.dart';
 import 'package:e_commerce/features/exceptions/api_exception.dart';
 import 'package:e_commerce/features/models/process_result.dart';
+import 'package:e_commerce/features/providers/auth_provider.dart';
+import 'package:e_commerce/features/utils/storage_service.dart';
+import 'package:e_commerce/features/utils/valueObject/email.dart';
 import 'package:flutter/material.dart'
     show ChangeNotifier, FocusNode, FormState, GlobalKey, TextEditingController;
 
 class LoginViewModel extends ChangeNotifier {
   final GlobalKey<FormState> formKeyLogin = GlobalKey<FormState>();
-  final LoginService _loginService = LoginService();
+  final LoginService _loginService;
+  final AuthProvider _authProvider;
+
+  LoginViewModel(this._loginService, this._authProvider);
 
   final TextEditingController loginController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -64,7 +68,7 @@ class LoginViewModel extends ChangeNotifier {
       return ProcessResult.failure("Por favor, revisa los campos marcados.");
     }
     final entity = LoginEntity(
-      email: LoginEmail(loginController.text),
+      email: Email(loginController.text),
       password: LoginPassword(passwordController.text),
       deviceInfo: await getDeviceInfo(),
       ipAddress: await getIpAddress(),
@@ -75,6 +79,10 @@ class LoginViewModel extends ChangeNotifier {
     final loginData = LoginModel.fromEntity(entity);
     try {
       await _loginService.postLogin(loginData.toJson());
+      final token = await StorageService.getAccessToken();
+      if (token != null) {
+        _authProvider.login(token);
+      }
       return ProcessResult.ok();
     } on ApiException catch (e) {
       return ProcessResult.failure(e.message);

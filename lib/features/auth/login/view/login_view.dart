@@ -1,4 +1,5 @@
 import 'package:e_commerce/features/auth/login/view_model/login_view_model.dart';
+import 'package:e_commerce/features/utils/ui_handler.dart';
 import 'package:e_commerce/presentation/widgets/app_bars/custom_app_bar.dart';
 import 'package:e_commerce/presentation/widgets/buttons/button_type.dart';
 import 'package:e_commerce/presentation/widgets/buttons/custom_button.dart';
@@ -60,8 +61,14 @@ class LoginView extends StatelessWidget {
                       controller: loginViewModel.passwordController,
                       focusNode: loginViewModel.passwordFocusNode,
                       onSubmitted: (_) async {
-                        loginViewModel.passwordFocusNode.unfocus();
-                        await _handleSubmit(context, loginViewModel);
+                        UiHandler.handleProcessing(
+                          context: context,
+                          action: () => loginViewModel.onFormSubmit(),
+                          successMessage: "¡Bienvenido de nuevo!",
+                          onSuccess: () {
+                            context.pushReplacement('/home');
+                          },
+                        );
                       },
                     ),
 
@@ -72,8 +79,14 @@ class LoginView extends StatelessWidget {
                         text: loginViewModel.isLoading
                             ? "Espere..."
                             : "Iniciar Sesión",
-                        onPressed: () async =>
-                            _handleSubmit(context, loginViewModel),
+                        onPressed: () async {
+                          UiHandler.handleProcessing(
+                            context: context,
+                            action: () => loginViewModel.onFormSubmit(),
+                            successMessage: "¡Bienvenido de nuevo!",
+                            onSuccess: () {},
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -115,28 +128,5 @@ class LoginView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Future<void> _handleSubmit(
-    BuildContext context,
-    LoginViewModel loginViewModel,
-  ) async {
-    final result = await loginViewModel.onFormSubmit();
-
-    if (!context.mounted) return;
-
-    if (result.success) {
-      CustomSnackbar.show(
-        context,
-        message: "Bienvenido!!",
-        type: SnackbarType.success,
-      );
-    } else {
-      CustomSnackbar.show(
-        context,
-        message: result.error ?? "Error desconocido",
-        type: SnackbarType.error,
-      );
-    }
   }
 }

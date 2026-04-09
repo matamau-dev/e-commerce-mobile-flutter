@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/customer/profile/domain/models/activity_models.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/activity_models.dart';
 import 'package:flutter/material.dart';
 
 class ActivityViewModel extends ChangeNotifier {

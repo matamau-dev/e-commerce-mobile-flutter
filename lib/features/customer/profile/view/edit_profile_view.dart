@@ -19,9 +19,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   void initState() {
     super.initState();
     final user = context.read<ProfileViewModel>().user;
-    _nameController = TextEditingController(text: user.name);
-    _emailController = TextEditingController(text: user.email);
-    _phoneController = TextEditingController(text: user.phone);
   }
 
   @override
@@ -65,10 +62,8 @@ class _EditProfileViewState extends State<EditProfileView> {
               height: 50,
               child: FilledButton(
                 onPressed: () {
-                  context.read<ProfileViewModel>().updateUser(
-                    _nameController.text,
-                    _emailController.text,
-                    _phoneController.text,
+                  print(
+                    "Guardar cambios: ${_nameController.text}, ${_emailController.text}, ${_phoneController.text}",
                   );
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(

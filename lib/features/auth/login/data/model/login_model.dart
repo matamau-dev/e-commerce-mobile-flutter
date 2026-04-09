@@ -1,6 +1,6 @@
 import 'package:e_commerce/features/auth/login/domain/entities/login_entity.dart';
-import 'package:e_commerce/features/auth/login/domain/valueObject/login_email.dart';
 import 'package:e_commerce/features/auth/login/domain/valueObject/login_password.dart';
+import 'package:e_commerce/features/utils/valueObject/email.dart';
 
 class LoginModel {
   final String email;
@@ -30,7 +30,7 @@ class LoginModel {
   );
 
   LoginEntity toEntity() => LoginEntity(
-    email: LoginEmail(email),
+    email: Email(email),
     password: LoginPassword(password),
     deviceInfo: deviceInfo,
     ipAddress: ipAddress,

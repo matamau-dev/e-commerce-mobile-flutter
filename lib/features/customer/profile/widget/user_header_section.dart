@@ -1,3 +1,4 @@
+import 'package:e_commerce/features/customer/profile/domain/data/models/user_model.dart';
 import 'package:e_commerce/features/customer/profile/view_model/profile_view_model.dart';
 import 'package:e_commerce/presentation/widgets/buttons/button_type.dart';
 import 'package:e_commerce/presentation/widgets/buttons/custom_button.dart';
@@ -6,7 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class UserHeaderSection extends StatelessWidget {
-  const UserHeaderSection({super.key});
+  final UserModel user;
+  const UserHeaderSection({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class UserHeaderSection extends StatelessWidget {
               ),
               child: ClipOval(
                 child: Image.network(
-                  user.imageUrl,
+                  this.user.imageUrl,
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
@@ -47,9 +49,7 @@ class UserHeaderSection extends StatelessWidget {
               bottom: 0,
               right: 0,
               child: GestureDetector(
-                onTap: () {
-                  _showProfileOptions(context, viewModel);
-                },
+                onTap: () {},
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -72,7 +72,7 @@ class UserHeaderSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          user.name,
+          this.user.name,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).colorScheme.onSurface,
@@ -80,7 +80,7 @@ class UserHeaderSection extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          user.email,
+          this.user.email,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
@@ -97,35 +97,6 @@ class UserHeaderSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  void _showProfileOptions(BuildContext context, ProfileViewModel viewModel) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text("Elegir de galería"),
-              onTap: () {
-                Navigator.pop(context);
-                viewModel.updateProfileImage();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title: const Text("Tomar foto"),
-              onTap: () {
-                Navigator.pop(context);
-                viewModel.updateProfileImage();
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

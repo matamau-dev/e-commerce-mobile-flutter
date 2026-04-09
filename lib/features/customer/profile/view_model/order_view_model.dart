@@ -1,4 +1,4 @@
-import 'package:e_commerce/features/customer/profile/domain/models/order_model.dart';
+import 'package:e_commerce/features/customer/profile/domain/data/models/order_model.dart';
 import 'package:flutter/material.dart';
 
 class OrderViewModel extends ChangeNotifier {

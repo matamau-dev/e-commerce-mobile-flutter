@@ -36,6 +36,7 @@ class HomeView extends StatelessWidget {
           child: viewModel.isLoading
               ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
